@@ -18,7 +18,7 @@ You will need the following things properly installed on your computer.
 * `git clone <repository-url>` this repository
 * `cd vk-spy`
 * `npm install`
-* `bower install`
+* `bower install` ( or 'npm install -g bower' )
 
 ## Running / Development
 
