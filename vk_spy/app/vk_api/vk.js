@@ -1,53 +1,46 @@
-
 'use strinct';
+
+const METHOD_URL = "https://api.vk.com/method/";
 
 export default class VKSpy
 {
-    constructor( auth_token )
-    {
+    constructor( auth_token ){
         this.token = auth_token;        
     }
 
-    sendMessage( user_id, text ){
-            
-        var script = document.createElement('SCRIPT');  
-    
-        let str = "https://api.vk.com/method/messages.send?access_token=";
-        str += this.token;
-        str += "&callback=callbackFunc&message=Test%20message&user_id=";
-        str += user_id;
-            
-        script.src = str;
-            
-        document.getElementsByTagName("head")[0].appendChild(script); 
- 
-        function callbackFunc(result) { 
-          alert(result); 
-        }       
+
+    sendRequest( url, callback ){
+        var request = require('request');
+        request(url, function (error, response, body) {
+            console.log('error:', error); // Print the error if one occurred
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+            if (!error && response.statusCode === 200) {
+                let json_body = JSON.parse(body);
+                callback(json_body);
+            }
+        });
     }
 
-    userGet(){
-        function callbackFunc(result) { 
-          alert(result); 
-        } 
-        var script = document.createElement('SCRIPT');  
-        let str = "https://api.vk.com/method/users.get?access_token=";
-        str += this.token;
-        str += "&callback=callbackFunc";            
-        script.src = str;
-        document.getElementsByTagName("head")[0].appendChild(script);   
+    sendMessage( user_id, text ){
+        let url = METHOD_URL + "messages.send?access_token=";
+        url += this.token;
+        url += "&message="
+        url += encodeURIComponent(text);
+        url += "&user_id=";
+        url += user_id;
+        this.sendRequest( url, function(){} );
+    }
+
+    userGet( callback ){  
+        let url = METHOD_URL + "users.get?access_token=";
+        url += this.token;
+        this.sendRequest( url, callback );
     }
 
     setOnline(){
-        var script = document.createElement('SCRIPT');  
-    
-        let str = "https://api.vk.com/method/account.setOnline?access_token=";
-        str += this.token;
-        str += "&voip=0";
-        script.src = str;
-            
-        document.getElementsByTagName("head")[0].appendChild(script); 
- 
-    }
-    
+        let url = METHOD_URL + "account.setOnline?access_token=";
+        url += this.token;
+        url += "&voip=0";
+        this.sendRequest( url, function(){} ); 
+    }    
 }
