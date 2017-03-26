@@ -1,1 +1,11 @@
 <button {{action "logIn"}}>Войти</button>
+<button {{action "currentUser"}}>Текущий пользователь</button>
+
+<ul>
+  {{#each authUsers.users as |item|}}
+    <li>
+      {{item.id}}
+      <button {{action "selectUser" item}}>Выбрать</button>
+    </li>
+  {{/each}}
+</ul>

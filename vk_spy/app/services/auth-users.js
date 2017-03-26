@@ -27,8 +27,12 @@ export default Ember.Service.extend({
     }, 
 
     remove(item) {
-        // TODO почистить если удаляем текущего пользователя
         this.get('users').removeObject(item);
+
+        // TODO проверить
+        if( this.get('currentUser') === item ){
+            this.set('currentUser', null);
+        }
     },
 
     removeByID( id ){
@@ -43,8 +47,6 @@ export default Ember.Service.extend({
 
     userToken( id ){
         let users = this.get('users');
-        console.log( 'Inside userToken. Users:' ); 
-        console.log( users );
         for (var j = 0; j < users.length; j++){
             if( users[j].id === id )
                 return users[j].token;
@@ -58,6 +60,9 @@ export default Ember.Service.extend({
                 this.set('currentUser', users[0]);
             }
         }
+
+        console.log( 'Current user is' );
+        console.log( this.get('currentUser') );
         return this.get('currentUser');
     },
 
