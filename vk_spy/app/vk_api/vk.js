@@ -24,7 +24,7 @@ export default class VKSpy
     sendMessage( user_id, text ){
         let url = METHOD_URL + "messages.send?access_token=";
         url += this.token;
-        url += "&message="
+        url += "&message=";
         url += encodeURIComponent(text);
         url += "&user_id=";
         url += user_id;

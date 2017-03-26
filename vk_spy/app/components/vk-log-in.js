@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import VKSpy from './../vk_api/vk';
-import UserData from './../objects/user-data';
+import AuthUser from './../objects/auth-user';
 
 const {remote} = require('electron');
 const {BrowserWindow, ipcMain} = remote;
@@ -12,14 +12,11 @@ export default Ember.Component.extend({
             this.get('authUsers').set('currentUser',item);
         },
 
+        removeUser( item ){
+            this.get('authUsers').remove( item );
+        },
+
         currentUser(){
-
-        let captainAmerica = UserData.create({
-          firstName: 'Steve',
-          lastName: 'Rogers',
-        });
-
-        console.log( captainAmerica.get('fullName') );
           this.get('authUsers').getCurrentUser();  
         },
 
@@ -61,28 +58,31 @@ export default Ember.Component.extend({
             ipcMain.on('query', (event, message) => {
                 let token = getURLParam( message.split("#")[1], "access_token" );
                 let service = new VKSpy( token ); 
-                let user = service.userGet( function( response ){
+                service.userGet( function( response ){
                     
                     console.log( 'user' );
                     console.log(response.response[0]);
 
-                    auth_users.add({
+                    let user = AuthUser.create({
                         firstName: response.response[0].first_name,
-                        lastName: response.response[0].last_name, 
+                        lastName: response.response[0].last_name,
                         id: response.response[0].uid,
                         token: token
                     });
+                    auth_users.add( user );
                     vkWindow.close();
                 });
             });
 
             vkWindow.webContents.on('did-finish-load', function(){
                 if( vkWindow.webContents.getURL().search( "access_token" ) !== -1 )
+                {
                     vkWindow.webContents.executeJavaScript(
                         "const {ipcRenderer} = require('electron');" + 
                         "let message = document.location.href;" +
                         "ipcRenderer.send('query', message);"
                         );
+                }
             });
 
             function getURLParam(url, param_name) {

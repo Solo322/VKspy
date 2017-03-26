@@ -1,8 +1,15 @@
 import Ember from 'ember';
+import AuthUser from './../objects/auth-user';
 
 export default Ember.Service.extend({
     users: null,
     currentUser: null,
+    usersChanged: function() {
+        // При каких либо изменения в users запишем это в файл
+        // TODO сделать запись один раз при выходе из программы!
+        var fs = require('fs');
+        fs.writeFile('cookie.json', JSON.stringify(this.get('users'), null, 2) , 'utf-8');   
+    }.observes('users.[]'),
 
     init(){
         this._super(...arguments);
@@ -12,7 +19,12 @@ export default Ember.Service.extend({
             let contents = fs.readFileSync('cookie.json', 'utf-8');
             if( contents.length ){
                 let saved_users = JSON.parse(contents);
-                this.set('users', saved_users);
+                let auth_users = [];
+                for(let i = 0; i < saved_users.length; i++){
+                    let user = AuthUser.create(saved_users[i]);
+                    auth_users.push( user );
+                }
+                this.set('users', auth_users);
             }
         }
     },
@@ -22,36 +34,33 @@ export default Ember.Service.extend({
         console.log(item);
         this.set('currentUser', item);
         this.get('users').pushObject(item);
-        var fs = require('fs');
-        fs.writeFile('cookie.json', JSON.stringify(this.get('users'), null, 2) , 'utf-8');
     }, 
 
     remove(item) {
         this.get('users').removeObject(item);
-
         // TODO проверить
         if( this.get('currentUser') === item ){
             this.set('currentUser', null);
         }
     },
 
-    removeByID( id ){
-        let users = this.get('users');
-        for (var j = 0; j < users.length; j++){
-            if( users[j].id === id ){
-                users.splice(j, 1)
-                return;
-            }
-        }        
-    },
+    // removeByID( id ){
+    //     let users = this.get('users');
+    //     for (var j = 0; j < users.length; j++){
+    //         if( users[j].id === id ){
+    //             users.splice(j, 1)
+    //             return;
+    //         }
+    //     }        
+    // },
 
-    userToken( id ){
-        let users = this.get('users');
-        for (var j = 0; j < users.length; j++){
-            if( users[j].id === id )
-                return users[j].token;
-        }
-    },
+    // userToken( id ){
+    //     let users = this.get('users');
+    //     for (var j = 0; j < users.length; j++){
+    //         if( users[j].id === id )
+    //             return users[j].token;
+    //     }
+    // },
 
     getCurrentUser(){
         if(this.get('currentUser') === null){

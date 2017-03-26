@@ -4,8 +4,9 @@
 <ul>
   {{#each authUsers.users as |item|}}
     <li>
-      {{item.id}}
+      {{item.fullName}}
       <button {{action "selectUser" item}}>Выбрать</button>
+      <button {{action "removeUser" item}}>Удалить</button>
     </li>
   {{/each}}
 </ul>
