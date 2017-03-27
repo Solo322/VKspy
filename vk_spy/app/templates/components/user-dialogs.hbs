@@ -1,0 +1,21 @@
+<ul>
+  {{#each dialogs as |dialog|}}
+    <li>
+      {{dialog.body}}
+      <button {{action "goToDialog" dialog}} class="btn btn-default">Перейти к диалогу</button>
+    </li>
+  {{/each}}
+</ul>
+
+{{companion}}
+
+
+<ul>
+  {{#each messages as |msg|}}
+    <li>
+      {{msg.body}}
+    </li>
+  {{/each}}
+</ul>
+{{input type="text" value=messageText}} 
+<button {{action "sendMessage"}} class="btn btn-default">Отправить</button>

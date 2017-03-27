@@ -2,6 +2,8 @@
 
 const METHOD_URL = "https://api.vk.com/method/";
 
+let SERVICE = null;
+
 export default class VKSpy
 {
     constructor( auth_token ){
@@ -43,4 +45,34 @@ export default class VKSpy
         url += "&voip=0";
         this.sendRequest( url, function(){} ); 
     }    
+
+    getDialogs( callback ){
+        let url = METHOD_URL + "messages.getDialogs?access_token=";
+        url += this.token;
+        url += "&count=2";
+        this.sendRequest( url, callback ); 
+    }
+
+    longPopServer(){
+        let url = METHOD_URL + "messages.getLongPollServer?access_token=";
+        url += this.token;
+        url += "&need_pts=0";
+        SERVICE = this;
+        this.sendRequest( url, function( body ){
+            console.log('longPopServer first');
+            console.log(body);
+            let url = "https://";
+            url += body.response.server;
+            url += "?act=a_check&key=";
+            url += body.response.key;
+            url += "&ts=";
+            url += body.response.ts;
+            url += "&wait=25&mode=2&version=1";
+            SERVICE.sendRequest( url, function( body_second ){
+                console.log('longPopServer second');
+                console.log(body_second);
+            } ); 
+
+        } ); 
+    }
 }

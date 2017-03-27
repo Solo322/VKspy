@@ -14,5 +14,19 @@ export default Ember.Route.extend({
             let service = new VKSpy( this.get('authUsers').getCurrentUser().token );
             service.setOnline();
         },
+
+        getDialogs(){
+            this.replaceWith('dialog');
+            let service = new VKSpy( this.get('authUsers').getCurrentUser().token );
+            service.getDialogs(function( body ){
+                console.log('getDialogs');
+                console.log(body);
+            });
+        },
+
+        longPopServer(){
+            let service = new VKSpy( this.get('authUsers').getCurrentUser().token );
+            service.longPopServer();
+        }
     }
 });

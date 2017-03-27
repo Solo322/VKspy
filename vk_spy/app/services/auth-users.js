@@ -30,8 +30,6 @@ export default Ember.Service.extend({
     },
 
     add(item) {
-        console.log('Inside Add Service');
-        console.log(item);
         this.set('currentUser', item);
         this.get('users').pushObject(item);
     }, 
@@ -69,9 +67,6 @@ export default Ember.Service.extend({
                 this.set('currentUser', users[0]);
             }
         }
-
-        console.log( 'Current user is' );
-        console.log( this.get('currentUser') );
         return this.get('currentUser');
     },
 

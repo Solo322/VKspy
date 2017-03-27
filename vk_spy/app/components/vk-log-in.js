@@ -17,13 +17,14 @@ export default Ember.Component.extend({
         },
 
         currentUser(){
-          this.get('authUsers').getCurrentUser();  
+          console.log(this.get('authUsers').getCurrentUser());  
         },
 
         logIn(){
             auth_users = this.get('authUsers');
             // ссылка на текущий BrowserWindow
             const current = BrowserWindow.getFocusedWindow();
+
             // создаем новое окно по нажатии с необходимым URL
             let vkWindow = new BrowserWindow({
                 width: 800,
