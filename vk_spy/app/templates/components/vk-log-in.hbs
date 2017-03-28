@@ -1,5 +1,12 @@
+
+{{!--  	
 <button {{action "currentUser"}} class="btn btn-default">Текущий пользователь</button>
+--}}
+
+	
+<button {{action "logIn"}} class="btn btn-primary btn-lg active">Войти</button>
 <div>
+	Аутентифицированные пользователи:
 	<ul>
 	  {{#each authUsers.users as |item|}}
 	    <li>
@@ -9,5 +16,4 @@
 	    </li>
 	  {{/each}}
 	</ul>
-	<button {{action "logIn"}} class="btn btn-primary btn-lg active">Войти</button>
 </div>

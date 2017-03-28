@@ -3,41 +3,39 @@ import Ember from 'ember';
 export default Ember.Component.extend({
 
 	companion: null,
+	inDialog: null,
 	ts: null,
+	dialogs: null,
+
+  	inDialogObserver: Ember.observer('inDialog', function() {
+  		if(!this.get('inDialog')){;
+			this.getDialogs();
+  		}
+  	}),
 
 
 	didReceiveAttrs() {
-
+		this._super(...arguments);
 		this.getDialogs();
-/*		if( ts === null ){
-			let url = "https://api.vk.com/method/messages.getLongPollServer?access_token=";
-			url += this.get('authUsers').getCurrentUser().token;
-			url += "&need_pts=0";
-	    	$.getJSON(url).then(data => {
-	    		this.set('ts', data.response.ts);
-
-	            let url = "https://";
-	            url += data.response.server;
-	            url += "?act=a_check&key=";
-	            url += data.response.key;
-	            url += "&ts=";
-	            url += data.response.ts;
-	            url += "&wait=25&mode=2&version=1";
-
-    	    	$.getJSON(url).then(data => {
-	    			this.set('ts', data.response.ts);
-	    		});
-	    	});	
-		}*/
   	},
 
+	didUpdateAttrs() {
+		this._super(...arguments);
+		this.getDialogs();
+  	},
 
 
   	getDialogs(){
   		let url = "https://api.vk.com/method/messages.getDialogs?access_token=";
-		url += this.get('authUsers').getCurrentUser().token;
+  		let currentUser = this.get('authUsers').getCurrentUser();
+  		if( !currentUser )
+  			return;
+		url += currentUser.token;
 		url += "&count=2";
     	$.getJSON(url).then(data => {
+    		if( data.error )
+    			alert('Пользователь не авторизован');
+    		console.log( data );
     		data.response.shift();
       		this.set('dialogs', data.response);
     	});
@@ -51,13 +49,18 @@ export default Ember.Component.extend({
 			url += "&user_id=";
 			url += dialog.uid;
 			this.set('companion',dialog.uid);
-	 
+	 		this.set('inDialog', true);
+
 	    	$.getJSON(url).then(data => {
 	    		console.log('getHistory');
 	    		console.log(data);
 	    		data.response.shift();
       			this.set('messages', data.response.reverse())
 	    	});
+  		},
+
+  		goToBack(){
+  			this.set( 'inDialog', false );
   		},
 
   		sendMessage(){
@@ -70,7 +73,8 @@ export default Ember.Component.extend({
 
         	// TODO Неправильно! Вдруг сообщение не отправлено!
 	        this.get('messages').pushObject({
-	        	body: this.get('messageText')
+	        	body: this.get('messageText'),
+	        	out: 1
 	        });
 
 	    	$.getJSON(url).then(data => {

@@ -2,6 +2,7 @@ import Ember from 'ember';
 import AuthUser from './../objects/auth-user';
 
 export default Ember.Service.extend({
+
     users: null,
     currentUser: null,
     usersChanged: function() {
@@ -10,6 +11,7 @@ export default Ember.Service.extend({
         var fs = require('fs');
         fs.writeFile('cookie.json', JSON.stringify(this.get('users'), null, 2) , 'utf-8');   
     }.observes('users.[]'),
+
 
     init(){
         this._super(...arguments);
