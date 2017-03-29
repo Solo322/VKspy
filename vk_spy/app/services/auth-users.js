@@ -32,6 +32,11 @@ export default Ember.Service.extend({
     },
 
     add(item) {
+
+        let finded_user = this.get('users').findBy( 'id', item.id );
+        if( finded_user ){
+            this.get('users').removeObject(finded_user);
+        }
         this.set('currentUser', item);
         this.get('users').pushObject(item);
     }, 
