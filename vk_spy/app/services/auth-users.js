@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import AuthUser from './../objects/auth-user';
+import VKUser from './../objects/vk-user';
 
 export default Ember.Service.extend({
 
@@ -9,7 +9,7 @@ export default Ember.Service.extend({
         // При каких либо изменения в users запишем это в файл
         // TODO сделать запись один раз при выходе из программы!
         var fs = require('fs');
-        fs.writeFile('cookie.json', JSON.stringify(this.get('users'), null, 2) , 'utf-8');   
+        fs.writeFile('cookie.json', JSON.stringify(this.get('users'), null, 2) , 'utf-8', function(){} );   
     }.observes('users.[]'),
 
 
@@ -23,16 +23,17 @@ export default Ember.Service.extend({
                 let saved_users = JSON.parse(contents);
                 let auth_users = [];
                 for(let i = 0; i < saved_users.length; i++){
-                    let user = AuthUser.create(saved_users[i]);
+                    let user = VKUser.create(saved_users[i]);
                     auth_users.push( user );
                 }
                 this.set('users', auth_users);
+                if( auth_users.length > 0 )
+                    this.set('currentUser', auth_users[0]);
             }
         }
     },
 
     add(item) {
-
         let finded_user = this.get('users').findBy( 'id', item.id );
         if( finded_user ){
             this.get('users').removeObject(finded_user);
@@ -48,24 +49,6 @@ export default Ember.Service.extend({
             this.set('currentUser', null);
         }
     },
-
-    // removeByID( id ){
-    //     let users = this.get('users');
-    //     for (var j = 0; j < users.length; j++){
-    //         if( users[j].id === id ){
-    //             users.splice(j, 1)
-    //             return;
-    //         }
-    //     }        
-    // },
-
-    // userToken( id ){
-    //     let users = this.get('users');
-    //     for (var j = 0; j < users.length; j++){
-    //         if( users[j].id === id )
-    //             return users[j].token;
-    //     }
-    // },
 
     getCurrentUser(){
         if(this.get('currentUser') === null){

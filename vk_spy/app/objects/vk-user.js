@@ -4,6 +4,7 @@ export default Ember.Object.extend({
    	firstName: null,
 	lastName: null,
 	id: null,
+	photo_50: null,
 	token: null,
 
 	fullName: Ember.computed('firstName', 'lastName', function() {

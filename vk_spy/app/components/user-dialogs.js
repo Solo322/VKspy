@@ -1,14 +1,17 @@
 import Ember from 'ember';
 
+const DIALOG_COUNT = 5;
+const MESSAGE_COUNT = 10;
+
 export default Ember.Component.extend({
 
 	authService: Ember.inject.service('auth-users'),
 	currentUser: Ember.computed.alias('authService.currentUser'),
 	currentUserChanged: Ember.observer('currentUser', function() {
-		console.log('currentUserChanged');
-    	// deal with the change
-    	this.getDialogs(); 
+	    Ember.run.once(this, 'getDialogs');
   	}),
+
+
 	companion: null,
 	inDialog: null,
 	ts: null,
@@ -35,16 +38,15 @@ export default Ember.Component.extend({
 
   	getDialogs(){
   		let url = "https://api.vk.com/method/messages.getDialogs?access_token=";
-  		let currentUser = this.get('authUsers').getCurrentUser();
 		console.log('getDialogs currentUser');
-		console.log(currentUser);
-  		if( !currentUser )
-  		{
+		console.log(this.get('currentUser'));
+  		if( !this.get('currentUser') ){
   			this.set('dialogs', null);
   			return;
   		}
-		url += currentUser.token;
-		url += "&count=2";
+		url += this.get('currentUser').token;
+		url += "&count=" + DIALOG_COUNT;
+
     	$.getJSON(url).then(data => {
     		if( data.error )
     			alert('Пользователь не авторизован');
@@ -56,16 +58,23 @@ export default Ember.Component.extend({
 
   	actions: {
 
+		// Test func
   		getCurrentUser(){
-  			console.log(this.authService);
-  			console.log(this.currentUser);
-  			//console.log(this.currentUser.token);
   			console.log(this.get('currentUser'));
   		},
+
+
+		consoleDlgInfo( dialog ){
+			console.log( 'consoleDlgInfo' );
+			console.log( dialog );
+			console.log(this.get('vkUsers').getUserByID( dialog.uid ));
+			console.log(this.get('vkUsers').users);
+		},
+
   		goToDialog( dialog ){
 			let url = "https://api.vk.com/method/messages.getHistory?access_token=";
 			url += this.get('authUsers').getCurrentUser().token;
-			url += "&count=7";
+			url += "&count=" + MESSAGE_COUNT;
 			url += "&user_id=";
 			url += dialog.uid;
 			this.set('companion',dialog.uid);

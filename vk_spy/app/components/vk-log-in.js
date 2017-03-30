@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import VKSpy from './../vk_api/vk';
-import AuthUser from './../objects/auth-user';
+import VKUser from './../objects/vk-user';
 
 const {remote} = require('electron');
 const {BrowserWindow, ipcMain} = remote;
@@ -64,7 +64,7 @@ export default Ember.Component.extend({
                     console.log( 'user' );
                     console.log(response.response[0]);
 
-                    let user = AuthUser.create({
+                    let user = VKUser.create({
                         firstName: response.response[0].first_name,
                         lastName: response.response[0].last_name,
                         id: response.response[0].uid,

@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import { initialize } from 'vk-spy/initializers/im-route';
+import { initialize } from 'vk-spy/initializers/vk-users';
 import { module, test } from 'qunit';
 import destroyApp from '../../helpers/destroy-app';
 
-module('Unit | Initializer | im route', {
+module('Unit | Initializer | vk users', {
   beforeEach() {
     Ember.run(() => {
       this.application = Ember.Application.create();
