@@ -18,9 +18,11 @@
 
 Диалоги:
 <ul>
-  {{#each dialogs as |dialog|}}
+  {{#each sortedDialogs as |dialog|}}
     <li>
-      {{dialog.body}}
+      {{dialog.lastMsg}}
+      <img src={{dialog.user.photo_50}} alt="Logo">
+      
       <button {{action "goToDialog" dialog}} class="btn btn-default">Перейти к диалогу</button>
       <button {{action "consoleDlgInfo" dialog}} class="btn btn-default">Инфа о диалоге</button>
     </li>
