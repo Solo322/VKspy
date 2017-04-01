@@ -26,7 +26,11 @@
       {{dialog.user.fullName}}
       <br>
 
-      {{dialog.lastMsg}}
+      {{#if dialog.message.type}}
+        <font color = "blue">{{dialog.message.type}}</font>
+      {{else}}
+        {{dialog.message.text}}
+      {{/if}}
 
       <button {{action "goToDialog" dialog}} class="btn btn-default">Перейти к диалогу</button>
       <button {{action "consoleDlgInfo" dialog}} class="btn btn-default">Инфа о диалоге</button>

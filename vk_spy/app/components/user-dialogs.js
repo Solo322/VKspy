@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import VKDialog from './../objects/vk-dialog';
+import VKMessage from './../objects/vk-message';
 
 const DIALOG_COUNT = 5;
 const MESSAGE_COUNT = 10;
@@ -16,7 +17,7 @@ export default Ember.Component.extend({
     inDialog: null,
 
     dialogs: [],
-    dialogsSortingDesc: ['date:desc'],
+    dialogsSortingDesc: ['message.date:desc'],
     sortedDialogs: Ember.computed.sort('dialogs', 'dialogsSortingDesc'),
 
     messages: [],
@@ -61,18 +62,32 @@ export default Ember.Component.extend({
                 }
                 this.get('vkUsers').getUserByID( data.response[i].uid, function( user ){
                     let find_dialog = contex.get('dialogs');
+                    let type = null;
+                    if (dialog_response.attachments) {
+                        type = dialog_response.attachments[0].type;
+                    }
+                     
                     if( find_dialog && find_dialog.findBy( 'user.id', user.id))
                     {
-                        find_dialog.lastMsg = dialog_response.body;
-                        find_dialog.date = dialog_response.date;
+                        find_dialog.message.text = dialog_response.body;
+                        find_dialog.message.date = dialog_response.date;
+                        find_dialog.message.type = type;
+                        find_dialog.message.out = dialog_response.out;
+                        find_dialog.message.reaadState = dialog_response.read_state;
                     }
                     else
                     {
+                        let message = VKMessage.create({
+                            text: dialog_response.body,
+                            date: dialog_response.date,
+                            type: type,
+                            out: dialog_response.out,
+                            readState: dialog_response.read_state,
+                        });
                         let dialog = VKDialog.create(
                         {
                             user: user,
-                            lastMsg: dialog_response.body,
-                            date: dialog_response.date,
+                            message: message,                            
                         });
                         contex.get('dialogs').pushObject(dialog);
                     }
