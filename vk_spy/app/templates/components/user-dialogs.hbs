@@ -1,3 +1,18 @@
+<style>
+  .blueunread {
+    color: blue;
+    background-color: #F0F8FF;
+  }
+  .blueread {
+    color: blue;
+  }
+  .unread {
+    background-color: #F0F8FF;
+  }
+  .read {
+  }
+</style>
+
 {{#if inDialog}}
 <button {{action "goToBack"}} class="btn btn-primary btn-lg active">Назад</button>
 {{companion}}
@@ -6,30 +21,35 @@
   {{#if msg.out}}
   	<p class="text-right">
       {{#if msg.type}}
-        <font color = "blue">{{msg.type}}</font>
+        <font color = "blue">
+          {{msg.type}}
+        </font>
       {{else}}
         {{msg.text}}
       {{/if}}
     </p>
   {{else}}
-  	<p class="text-left">
+    <p class="text-left">
       {{#if msg.type}}
-        <font color = "blue">{{msg.type}}</font>
+        <font color = "blue">
+          <p class = "blue{{if msg.readState "read" "unread"}}">
+          {{msg.type}}
+          </p>
+        </font>
       {{else}}
+        <p class = "{{if msg.readState "read" "unread"}}">
         {{msg.text}}
+        </p>
       {{/if}}
     </p>
   {{/if}}
   {{/each}}
 </div>
 
-
 {{input type="text" value=messageText enter="sendMessage" key-press="setActivity"}} 
 <button {{action "sendMessage"}} class="btn btn-default">Отправить</button>
 
-
 {{else}}
-
 Диалоги:
 <ul>
   {{#each sortedDialogs as |dialog|}}
@@ -37,13 +57,17 @@
       <img src={{dialog.user.photo_50}} alt="Logo">
       {{dialog.user.fullName}}
       <br>
-
       {{#if dialog.message.type}}
-        <font color = "blue">{{dialog.message.type}}</font>
+        <font color = "blue">
+          <p class = "blue{{if dialog.message.readState "read" "unread"}}">
+          {{dialog.message.type}}
+          </p>
+        </font>
       {{else}}
+        <p class = "{{if dialog.message.readState "read" "unread"}}">
         {{dialog.message.text}}
+        </p>
       {{/if}}
-
       <button {{action "goToDialog" dialog}} class="btn btn-default">Перейти к диалогу</button>
       <button {{action "consoleDlgInfo" dialog}} class="btn btn-default">Инфа о диалоге</button>
     </li>
@@ -51,6 +75,4 @@
 </ul>
 
 {{/if}}
-
-
 <button {{action "getCurrentUser"}} class="btn btn-default">Current user</button>

@@ -158,8 +158,6 @@ export default Ember.Component.extend({
                 }
                 console.log('getHistory');
                 console.log(data);
-                
-                //this.set('messages', data.response.reverse());
             });
         },
 
