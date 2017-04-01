@@ -93,7 +93,7 @@ export default Ember.Component.extend({
             console.log( 'consoleDlgInfo' );
             console.log( dialog );
             console.log(this.get('vkUsers').users);
-            this.get('vkUsers').getUserByID( dialog.uid, function( user ){
+            this.get('vkUsers').getUserByID( dialog.user.id, function( user ){
                 console.log('user');
                 console.log(user);
                 console.log(dialog);
