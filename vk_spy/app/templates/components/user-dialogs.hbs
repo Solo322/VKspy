@@ -2,7 +2,7 @@
 <button {{action "goToBack"}} class="btn btn-primary btn-lg active">Назад</button>
 {{companion}}
 <div style="width:500px">
-  {{#each messages as |msg|}}
+  {{#each sortedMessages as |msg|}}
   {{#if msg.out}}
   	<p class="text-left">{{msg.body}}</p>
   {{else}}
@@ -10,7 +10,12 @@
   {{/if}}
   {{/each}}
 </div>
-{{input type="text" value=messageText}} 
+
+
+
+
+
+{{input type="text" value=messageText enter="sendMessage"}} 
 <button {{action "sendMessage"}} class="btn btn-default">Отправить</button>
 
 

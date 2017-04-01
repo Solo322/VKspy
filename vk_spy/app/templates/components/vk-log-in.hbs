@@ -1,19 +1,19 @@
 
-{{!--  	
+{{!--   
 <button {{action "currentUser"}} class="btn btn-default">Текущий пользователь</button>
 --}}
 
-	
+    
 <button {{action "logIn"}} class="btn btn-primary btn-lg active">Войти</button>
 <div>
-	Аутентифицированные пользователи:
-	<ul>
-	  {{#each authUsers.users as |item|}}
-	    <li>
-	      {{item.fullName}}
-	      <button {{action "selectUser" item}} class="btn btn-default">Выбрать</button>
-	      <button {{action "removeUser" item}} class="btn btn-default">Удалить</button>
-	    </li>
-	  {{/each}}
-	</ul>
+    Аутентифицированные пользователи:
+    <ul>
+      {{#each authUsers.users as |item|}}
+        <li>
+          {{item.fullName}}
+          <button {{action "selectUser" item}} class="btn btn-default">Выбрать</button>
+          <button {{action "removeUser" item}} class="btn btn-default">Удалить</button>
+        </li>
+      {{/each}}
+    </ul>
 </div>
