@@ -12,10 +12,7 @@
 </div>
 
 
-
-
-
-{{input type="text" value=messageText enter="sendMessage"}} 
+{{input type="text" value=messageText enter="sendMessage" key-press="setActivity"}} 
 <button {{action "sendMessage"}} class="btn btn-default">Отправить</button>
 
 
@@ -25,16 +22,17 @@
 <ul>
   {{#each sortedDialogs as |dialog|}}
     <li>
-      {{dialog.lastMsg}}
       <img src={{dialog.user.photo_50}} alt="Logo">
-      
+      {{dialog.user.fullName}}
+      <br>
+
+      {{dialog.lastMsg}}
+
       <button {{action "goToDialog" dialog}} class="btn btn-default">Перейти к диалогу</button>
       <button {{action "consoleDlgInfo" dialog}} class="btn btn-default">Инфа о диалоге</button>
     </li>
   {{/each}}
 </ul>
-
-
 
 {{/if}}
 

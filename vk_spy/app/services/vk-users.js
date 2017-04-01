@@ -7,18 +7,17 @@ export default Ember.Service.extend({
 	getUserByID( id, callback ){
 
 		let finded_user = this.get('users').findBy( 'id', id );
-		if( finded_user )
-		{
+		if( finded_user ){
 			callback( finded_user );
 			return;
 		}
 
 		let url = "https://api.vk.com/method/users.get?";
 		url += "&user_ids=" + id;
-		url += "&fields=photo_50"
+		url += "&fields=photo_50";
     	$.getJSON(url).then(data => {
-    		if(data.response)
-    		{
+    		if(data.response){
+
     			for (let i = 0; i < data.response.length; i++) 
     			{
     				let user = VKUser.create({

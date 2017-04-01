@@ -27,8 +27,9 @@ export default Ember.Service.extend({
                     auth_users.push( user );
                 }
                 this.set('users', auth_users);
-                if( auth_users.length > 0 )
+                if( auth_users.length > 0 ){
                     this.set('currentUser', auth_users[0]);
+                }
             }
         }
     },

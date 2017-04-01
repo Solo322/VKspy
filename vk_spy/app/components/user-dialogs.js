@@ -24,7 +24,7 @@ export default Ember.Component.extend({
     sortedMessages: Ember.computed.sort('messages', 'messagesSortingDesc'),    
 
     inDialogObserver: Ember.observer('inDialog', function() {
-        if(!this.get('inDialog')){;
+        if(!this.get('inDialog')){
             this.getDialogs();
         }
     }),
@@ -51,18 +51,19 @@ export default Ember.Component.extend({
         url += "&count=" + DIALOG_COUNT;
 
         $.getJSON(url).then(data => {
-            if( data.error )
+            if( data.error ){
                 alert('Пользователь не авторизован');
+            }
             data.response.shift();
             for (var i = data.response.length - 1; i >= 0; i--) {
                 let contex = this;
                 let dialog_response = data.response[i];
-                console.log(dialog_response)
+                console.log(dialog_response);
                 // Чатики пока игнорируем
-                if(dialog_response.chat_id)
+                if(dialog_response.chat_id){
                     continue;
-                this.get('vkUsers').getUserByID( data.response[i].uid, function( user )
-                {
+                }
+                this.get('vkUsers').getUserByID( data.response[i].uid, function( user ){
                     let find_dialog = contex.get('dialogs');
                     if( find_dialog && find_dialog.findBy( 'user.id', user.id))
                     {
@@ -96,12 +97,21 @@ export default Ember.Component.extend({
             console.log( 'consoleDlgInfo' );
             console.log( dialog );
             console.log(this.get('vkUsers').users);
-            this.get('vkUsers').getUserByID( dialog.uid, function( user )
-            {
+            this.get('vkUsers').getUserByID( dialog.uid, function( user ){
                 console.log('user');
                 console.log(user);
                 console.log(dialog);
             } );
+        },
+
+        setActivity(){
+            let url = "https://api.vk.com/method/messages.setActivity?access_token=";
+            url += this.get('authUsers').getCurrentUser().token;
+            url += "&user_id=" + this.get('companion');
+            url += "&type=typing";
+            $.getJSON(url).then(data =>{
+                console.log('setActivity');
+            });
         },
 
         goToDialog( dialog ){
@@ -117,7 +127,7 @@ export default Ember.Component.extend({
                 console.log('getHistory');
                 console.log(data);
                 data.response.shift();
-                this.set('messages', data.response.reverse())
+                this.set('messages', data.response.reverse());
             });
         },
 
@@ -125,8 +135,7 @@ export default Ember.Component.extend({
             this.set( 'inDialog', false );
         },
 
-        sendMessage()
-        {
+        sendMessage(){
             let url = "https://api.vk.com/method/messages.send?access_token=";
             url += this.get('authUsers').getCurrentUser().token;
             url += "&message=";
@@ -141,8 +150,7 @@ export default Ember.Component.extend({
                 date: Date.now(),
             });
 
-            $.getJSON(url).then(data => {
-            });
+            $.getJSON(url);
             this.set('messageText', '');
         },
     }
