@@ -89,7 +89,7 @@ export default Ember.Component.extend({
             function getURLParam(url, param_name) {
               var vars = url.split("&");
               console.log(vars);
-              for (var i=0;i<vars.length;i++) {
+              for (var i = 0; i < vars.length; i++) {
                 var pair = vars[i].split("=");
                 if (pair[0] === param_name) {
                   return pair[1];

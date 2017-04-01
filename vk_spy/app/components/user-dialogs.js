@@ -41,12 +41,8 @@ export default Ember.Component.extend({
     },
 
     getDialogs(){
+        this.set('dialogs', []);
         let url = "https://api.vk.com/method/messages.getDialogs?access_token=";
-        if( !this.get('currentUser') )
-        {
-            this.set('dialogs', []);
-            return;
-        }
         url += this.get('currentUser').token;
         url += "&count=" + DIALOG_COUNT;
 
