@@ -51,6 +51,8 @@
 
 {{else}}
 Диалоги:
+<button {{action "lisenLongPopServer"}} class="btn btn-default">Начать слушать события</button>
+
 <ul>
   {{#each sortedDialogs as |dialog|}}
     <li>
@@ -68,7 +70,12 @@
         {{dialog.message.text}}
         </p>
       {{/if}}
+
       <button {{action "goToDialog" dialog}} class="btn btn-default">Перейти к диалогу</button>
+
+
+      <button {{action "goToDialog" dialog.user.id}} class="btn btn-default">Перейти к диалогу</button>
+
       <button {{action "consoleDlgInfo" dialog}} class="btn btn-default">Инфа о диалоге</button>
     </li>
   {{/each}}
