@@ -66,7 +66,9 @@ export default Ember.Component.extend({
                     if (dialog_response.attachments) {
                         type = dialog_response.attachments[0].type;
                     }
-                     
+                    else if (dialog_response.fwd_messages) {
+                        type = "forward messages";
+                    }
                     if( find_dialog && find_dialog.findBy( 'user.id', user.id))
                     {
                         find_dialog.message.text = dialog_response.body;
@@ -126,6 +128,7 @@ export default Ember.Component.extend({
         },
 
         goToDialog( dialog ){
+            this.set("messages", []);
             let url = "https://api.vk.com/method/messages.getHistory?access_token=";
             url += this.get('authUsers').getCurrentUser().token;
             url += "&count=" + MESSAGE_COUNT;
@@ -135,10 +138,28 @@ export default Ember.Component.extend({
             this.set('inDialog', true);
 
             $.getJSON(url).then(data => {
+                data.response.shift();
+                for (var i = data.response.length - 1; i >= 0; i--) {
+                    let type = null;
+                    if (data.response[i].attachments) {
+                        type = data.response[i].attachments[0].type;
+                    }
+                    else if (data.response[i].fwd_messages) {
+                        type = "forward messages";
+                    }
+                     let message = VKMessage.create({
+                            text: data.response[i].body,
+                            date: data.response[i].date,
+                            type: type,
+                            out: data.response[i].out,
+                            readState: data.response[i].read_state,
+                        });
+                     this.get("messages").pushObject(message);
+                }
                 console.log('getHistory');
                 console.log(data);
-                data.response.shift();
-                this.set('messages', data.response.reverse());
+                
+                //this.set('messages', data.response.reverse());
             });
         },
 

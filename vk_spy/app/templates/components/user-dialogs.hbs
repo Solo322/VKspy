@@ -4,9 +4,21 @@
 <div style="width:500px">
   {{#each sortedMessages as |msg|}}
   {{#if msg.out}}
-  	<p class="text-left">{{msg.body}}</p>
+  	<p class="text-right">
+      {{#if msg.type}}
+        <font color = "blue">{{msg.type}}</font>
+      {{else}}
+        {{msg.text}}
+      {{/if}}
+    </p>
   {{else}}
-  	<p class="text-right">{{msg.body}}</p>
+  	<p class="text-left">
+      {{#if msg.type}}
+        <font color = "blue">{{msg.type}}</font>
+      {{else}}
+        {{msg.text}}
+      {{/if}}
+    </p>
   {{/if}}
   {{/each}}
 </div>
