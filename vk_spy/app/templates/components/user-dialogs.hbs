@@ -22,10 +22,14 @@
   	<p class="text-right">
       {{#if msg.type}}
         <font color = "blue">
+          <p class = "blue{{if msg.readState "read" "unread"}}">
           {{msg.type}}
+          </p>
         </font>
       {{else}}
+        <p class = "{{if msg.readState "read" "unread"}}">
         {{msg.text}}
+        </p>
       {{/if}}
     </p>
   {{else}}
