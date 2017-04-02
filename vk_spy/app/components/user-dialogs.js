@@ -10,7 +10,9 @@ export default Ember.Component.extend({
     authService: Ember.inject.service('auth-users'),
     currentUser: Ember.computed.alias('authService.currentUser'),
     currentUserChanged: Ember.observer('currentUser', function() {
+        console.log('currentUserChanged');
         Ember.run.once(this, 'getDialogs');
+        Ember.run.once(this, 'longPopServer');
     }),
 
     companion: null,
@@ -30,17 +32,14 @@ export default Ember.Component.extend({
         }
     }),
 
-
     server: null,
     key: null,
     ts: null,
 
-
-
     didReceiveAttrs() {
         this._super(...arguments);
         this.getDialogs();
-
+        this.longPopServer();
     },
 
     didUpdateAttrs() {
@@ -63,6 +62,35 @@ export default Ember.Component.extend({
         }); 
     },
 
+    getMessageByID( message_id ){
+        let url = "https://api.vk.com/method/messages.getById?access_token=";
+        url += this.get('authUsers').getCurrentUser().token;
+        url += "&message_ids=" + message_id;
+
+        $.getJSON(url).then(data => {
+            data.response.shift();
+            for (var i = data.response.length - 1; i >= 0; i--) {
+                let type = null;
+                if (data.response[i].attachments) {
+                    type = data.response[i].attachments[0].type;
+                }
+                else if (data.response[i].fwd_messages) {
+                    type = "forward messages";
+                }
+                 let message = VKMessage.create({
+                        text: data.response[i].body,
+                        date: data.response[i].date,
+                        type: type,
+                        out: data.response[i].out,
+                        readState: data.response[i].read_state,
+                    });
+                 console.log( 'getMessageByID' );
+                 console.log( message );
+                 this.get("messages").pushObject(message);
+            }
+        });
+    },
+
     requestToLongPopServer(){
         console.log('requestToLongPopServer');
         let url = "https://";
@@ -74,48 +102,31 @@ export default Ember.Component.extend({
         url += "&wait=25&mode=2&version=1";
         let SERVICE = this;
         $.getJSON(url).then(data => {
-            // SERVICE.server = body.response.server;
-            // SERVICE.key = body.response.key;
             if( SERVICE.ts === data.ts ){
+                SERVICE.requestToLongPopServer();
                 return;
             }
             SERVICE.ts = data.ts;
             console.log('requestToLongPopServer answer');
             console.log( data );
-            
             for( let i = 0; i < data.updates.length; i++ ){
-                if( data.updates[i][0] == 4 ){
+                if( data.updates[i][0] === 4 ){
+                    // Получено новое сообщение
+                    console.log('MESSAGE!!!');
                     if( data.updates[i][3] === SERVICE.get('companion') ){
-                        console.log('MESSAGE!!!');
-                        
-
-                            let url = "https://api.vk.com/method/messages.getById?access_token=";
-                            url += this.get('authUsers').getCurrentUser().token;
-                            url += "&message_ids=" + data.updates[i][1];
-
-                            $.getJSON(url).then(data => {
-                                data.response.shift();
-                                for (var i = data.response.length - 1; i >= 0; i--) {
-                                    let type = null;
-                                    if (data.response[i].attachments) {
-                                        type = data.response[i].attachments[0].type;
-                                    }
-                                    else if (data.response[i].fwd_messages) {
-                                        type = "forward messages";
-                                    }
-                                     let message = VKMessage.create({
-                                            text: data.response[i].body,
-                                            date: data.response[i].date,
-                                            type: type,
-                                            out: data.response[i].out,
-                                            readState: data.response[i].read_state,
-                                        });
-                                     this.get("messages").pushObject(message);
-                                }
-                            });
-
-
-
+                        this.getMessageByID( data.updates[i][1] );
+                    }
+                }
+                else if( ( data.updates[i][0] === 7 || data.updates[i][0] === 6 ) ){
+                    // 7 Собеседник прочитал мои сообщения
+                    // 6 Я прочитал сообщения
+                    if( data.updates[i][1] === SERVICE.get('companion') ){
+                        let out = data.updates[i][0] === 7 ? 1 : 0;
+                        this.get('messages').forEach(function(item, index, enumerable) {
+                            if( Ember.get(item, 'out') === out ){
+                                Ember.set(item, "readState", 1);   
+                            }
+                        });
                     }
                 }
             }
@@ -163,6 +174,10 @@ export default Ember.Component.extend({
 
     getDialogs(){
         this.set('dialogs', []);
+
+        if( !this.get('currentUser') ){
+            return;
+        }
         let url = "https://api.vk.com/method/messages.getDialogs?access_token=";
         url += this.get('currentUser').token;
         url += "&count=" + DIALOG_COUNT;
@@ -170,6 +185,7 @@ export default Ember.Component.extend({
         $.getJSON(url).then(data => {
             if( data.error ){
                 alert('Пользователь не авторизован');
+                return;
             }
             data.response.shift();
             for (var i = data.response.length - 1; i >= 0; i--) {
@@ -253,8 +269,6 @@ export default Ember.Component.extend({
 
         goToDialog( user_id ){
             this.set("messages", []);
-            this.longPopServer();
-
 
             let url = "https://api.vk.com/method/messages.getHistory?access_token=";
             url += this.get('authUsers').getCurrentUser().token;
@@ -274,14 +288,14 @@ export default Ember.Component.extend({
                     else if (data.response[i].fwd_messages) {
                         type = "forward messages";
                     }
-                     let message = VKMessage.create({
+                    let message = VKMessage.create({
                             text: data.response[i].body,
                             date: data.response[i].date,
                             type: type,
                             out: data.response[i].out,
                             readState: data.response[i].read_state,
-                        });
-                     this.get("messages").pushObject(message);
+                    });
+                    this.get("messages").pushObject(message);
                 }
                 console.log('getHistory');
                 console.log(data);
@@ -299,14 +313,6 @@ export default Ember.Component.extend({
             url += encodeURIComponent(this.get('messageText'));
             url += "&user_id=";
             url += this.companion;
-
-            // TODO Неправильно! Вдруг сообщение не отправлено!
-            this.get('messages').pushObject({
-                body: this.get('messageText'),
-                out: 1,
-                date: Date.now(),
-            });
-
             $.getJSON(url);
             this.set('messageText', '');
         },
