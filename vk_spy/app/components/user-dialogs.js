@@ -236,8 +236,37 @@ export default Ember.Component.extend({
 
     actions: 
     {
-        lisenLongPopServer(){
-            this.longPopServer();
+
+        moreMessages(){
+            let url = "https://api.vk.com/method/messages.getHistory?access_token=";
+            url += this.get('authUsers').getCurrentUser().token;
+            url += "&offset=" + this.get('messages').length;
+            url += "&count=" + MESSAGE_COUNT;
+            url += "&user_id=";
+            url += this.get('companion');
+
+            $.getJSON(url).then(data => {
+                data.response.shift();
+                for (var i = data.response.length - 1; i >= 0; i--) {
+                    let type = null;
+                    if (data.response[i].attachments) {
+                        type = data.response[i].attachments[0].type;
+                    }
+                    else if (data.response[i].fwd_messages) {
+                        type = "forward messages";
+                    }
+                     let message = VKMessage.create({
+                            text: data.response[i].body,
+                            date: data.response[i].date,
+                            type: type,
+                            out: data.response[i].out,
+                            readState: data.response[i].read_state,
+                        });
+                     this.get("messages").pushObject(message);
+                }
+                console.log('getHistory');
+                console.log(data);
+            });
         },
 
         // Test func

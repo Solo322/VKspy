@@ -11,51 +11,52 @@
   }
   .read {
   }
+
+  .layer {
+    overflow: scroll; /* Добавляем полосы прокрутки */
+    width: 600px; /* Ширина блока */
+    height: 500px; /* Высота блока */
+    padding: 5px; /* Поля вокруг текста */
+  } 
 </style>
+
 
 {{#if inDialog}}
 <button {{action "goToBack"}} class="btn btn-primary btn-lg active">Назад</button>
 {{companion}}
-<div style="width:500px">
+<button {{action "moreMessages"}} class="btn btn-primary btn-lg active">Еще</button>
+<div class="layer">
   {{#each sortedMessages as |msg|}}
   {{#if msg.out}}
   	<p class="text-right">
       {{#if msg.type}}
         <font color = "blue">
-          <p class = "blue{{if msg.readState "read" "unread"}}">
-          {{msg.type}}
-          </p>
+          <p class = "blue{{if msg.readState "read" "unread"}}"> {{msg.type}} </p>
         </font>
       {{else}}
-        <p class = "{{if msg.readState "read" "unread"}}">
-        {{msg.text}}
-        </p>
+        <p class = "{{if msg.readState "read" "unread"}}"> {{msg.text}} </p>
       {{/if}}
     </p>
   {{else}}
     <p class="text-left">
       {{#if msg.type}}
         <font color = "blue">
-          <p class = "blue{{if msg.readState "read" "unread"}}">
-          {{msg.type}}
-          </p>
+          <p class = "blue{{if msg.readState "read" "unread"}}"> {{msg.type}} </p>
         </font>
       {{else}}
-        <p class = "{{if msg.readState "read" "unread"}}">
-        {{msg.text}}
-        </p>
+        <p class = "{{if msg.readState "read" "unread"}}"> {{msg.text}} </p>
       {{/if}}
     </p>
   {{/if}}
   {{/each}}
 </div>
 
+
 {{input type="text" value=messageText enter="sendMessage" key-press="setActivity"}} 
 <button {{action "sendMessage"}} class="btn btn-default">Отправить</button>
 
 {{else}}
 Диалоги:
-<button {{action "lisenLongPopServer"}} class="btn btn-default">Начать слушать события</button>
 
 <ul>
   {{#each sortedDialogs as |dialog|}}
@@ -65,14 +66,10 @@
       <br>
       {{#if dialog.message.type}}
         <font color = "blue">
-          <p class = "blue{{if dialog.message.readState "read" "unread"}}">
-          {{dialog.message.type}}
-          </p>
+          <p class = "blue{{if dialog.message.readState "read" "unread"}}"> {{dialog.message.type}} </p>
         </font>
       {{else}}
-        <p class = "{{if dialog.message.readState "read" "unread"}}">
-        {{dialog.message.text}}
-        </p>
+        <p class = "{{if dialog.message.readState "read" "unread"}}"> {{dialog.message.text}} </p>
       {{/if}}
 
       <button {{action "goToDialog" dialog.user.id}} class="btn btn-default">Перейти к диалогу</button>
