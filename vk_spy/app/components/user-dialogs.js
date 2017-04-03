@@ -71,8 +71,12 @@ export default Ember.Component.extend({
             data.response.shift();
             for (var i = data.response.length - 1; i >= 0; i--) {
                 let type = null;
+                let sticker = null;
                 if (data.response[i].attachments) {
                     type = data.response[i].attachments[0].type;
+                    if (data.response[i].attachment[0].type === "sticker") {
+                        sticker = data.response[i].attachment[0].sticker.photo_64;
+                    }
                 }
                 else if (data.response[i].fwd_messages) {
                     type = "forward messages";
@@ -83,6 +87,7 @@ export default Ember.Component.extend({
                         type: type,
                         out: data.response[i].out,
                         readState: data.response[i].read_state,
+                        stickerImg: server,
                     });
                  console.log( 'getMessageByID' );
                  console.log( message );
@@ -149,20 +154,25 @@ export default Ember.Component.extend({
             data.response.shift();
             for (var i = data.response.length - 1; i >= 0; i--) {
                 let type = null;
+                let sticker = null;
                 if (data.response[i].attachments) {
                     type = data.response[i].attachments[0].type;
+                    if (data.response[i].attachments[0].type === "sticker") {
+                        sticker = data.response[i].attachments[0].sticker.photo_64;
+                    }
                 }
                 else if (data.response[i].fwd_messages) {
                     type = "forward messages";
                 }
-                 let message = VKMessage.create({
+                let message = VKMessage.create({
                         text: data.response[i].body,
                         date: data.response[i].date,
                         type: type,
                         out: data.response[i].out,
                         readState: data.response[i].read_state,
+                        stickerImg: sticker,
                     });
-                 this.get("messages").pushObject(message);
+                this.get("messages").pushObject(message);
             }
             console.log('getHistory');
             console.log(data);
@@ -199,8 +209,12 @@ export default Ember.Component.extend({
                 this.get('vkUsers').getUserByID( data.response[i].uid, function( user ){
                     let find_dialog = contex.get('dialogs');
                     let type = null;
+                    let sticker = null;
                     if (dialog_response.attachments) {
                         type = dialog_response.attachments[0].type;
+                        if (dialog_response.attachments[0].type === "sticker") {
+                            sticker = dialog_response.attachments[0].sticker.photo_64;
+                        }
                     }
                     else if (dialog_response.fwd_messages) {
                         type = "forward messages";
@@ -212,6 +226,7 @@ export default Ember.Component.extend({
                         find_dialog.message.type = type;
                         find_dialog.message.out = dialog_response.out;
                         find_dialog.message.reaadState = dialog_response.read_state;
+                        find_dialog.message.stickerImg = sticker;
                     }
                     else
                     {
@@ -221,6 +236,7 @@ export default Ember.Component.extend({
                             type: type,
                             out: dialog_response.out,
                             readState: dialog_response.read_state,
+                            stickerImg: sticker,
                         });
                         let dialog = VKDialog.create(
                         {
@@ -249,8 +265,13 @@ export default Ember.Component.extend({
                 data.response.shift();
                 for (var i = data.response.length - 1; i >= 0; i--) {
                     let type = null;
+                    let sticker = null;
                     if (data.response[i].attachments) {
                         type = data.response[i].attachments[0].type;
+                        console.log();
+                        if (data.response[i].attachments[0].type === "sticker") {
+                            sticker = data.response[i].attachments[0].sticker.photo_64;
+                        }
                     }
                     else if (data.response[i].fwd_messages) {
                         type = "forward messages";
@@ -261,6 +282,7 @@ export default Ember.Component.extend({
                             type: type,
                             out: data.response[i].out,
                             readState: data.response[i].read_state,
+                            stickerImg: sticker,
                         });
                      this.get("messages").pushObject(message);
                 }
@@ -311,8 +333,12 @@ export default Ember.Component.extend({
                 data.response.shift();
                 for (var i = data.response.length - 1; i >= 0; i--) {
                     let type = null;
+                    let sticker = null;
                     if (data.response[i].attachments) {
                         type = data.response[i].attachments[0].type;
+                        if (data.response[i].attachments[0].type === "sticker") {
+                            sticker = data.response[i].attachments[0].sticker.photo_64;
+                        }
                     }
                     else if (data.response[i].fwd_messages) {
                         type = "forward messages";
@@ -323,6 +349,7 @@ export default Ember.Component.extend({
                             type: type,
                             out: data.response[i].out,
                             readState: data.response[i].read_state,
+                            stickerImg: sticker,
                     });
                     this.get("messages").pushObject(message);
                 }
