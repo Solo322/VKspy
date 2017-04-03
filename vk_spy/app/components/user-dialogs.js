@@ -208,12 +208,10 @@ export default Ember.Component.extend({
                 alert('Пользователь не авторизован');
                 return;
             }
-
             console.log( 'getDialogs' );
             console.log( data );
-
-            //data.response.shift();
-            for (var i = data.response.items.length - 1; i >= 0; i--) {
+            for (var i = data.response.items.length - 1; i >= 0; i--) 
+            {
                 let contex = this;
                 let dialog_response = data.response.items[i];
                 console.log(dialog_response);
@@ -225,12 +223,16 @@ export default Ember.Component.extend({
                     let find_dialog = contex.get('dialogs');
                     let type = null;
                     let sticker = null;
-                    if (dialog_response.attachments) {
+                    if (dialog_response.attachments) 
+                    {
                         type = dialog_response.attachments[0].type;
-                        if (dialog_response.attachments[0].type === "sticker") {
+                        if (dialog_response.attachments[0].type === "sticker") 
+                        {
                             sticker = dialog_response.attachments[0].sticker.photo_64;
                         }
-                    else if (dialog_response.message.fwd_messages) {
+                    }
+                    else if (dialog_response.message.fwd_messages)
+                    {
                         type = "forward messages";
                     }
                     if( find_dialog && find_dialog.findBy( 'user.id', user.id))
@@ -253,15 +255,14 @@ export default Ember.Component.extend({
                             readState: dialog_response.message.read_state,
                             stickerImg: sticker,
                         });
-                        let dialog = VKDialog.create(
-                        {
+                        let dialog = VKDialog.create({
                             user: user,
                             message: message,
                             unread: dialog_response.unread,                             
                         });
                         contex.get('dialogs').pushObject(dialog);
                     }
-                };
+                });
             }
         });
     },
