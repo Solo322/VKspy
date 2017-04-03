@@ -343,29 +343,30 @@ export default Ember.Component.extend({
             url += "&count=" + MESSAGE_COUNT;
             url += "&user_id=";
             url += user_id;
+            url += "&v=5.63";
             this.set('companion',user_id);
             this.set('inDialog', true);
 
             $.getJSON(url).then(data => {
-                data.response.shift();
-                for (var i = data.response.length - 1; i >= 0; i--) {
+
+                for (var i = data.response.items.length - 1; i >= 0; i--) {
                     let type = null;
                     let sticker = null;
-                    if (data.response[i].attachments) {
-                        type = data.response[i].attachments[0].type;
-                        if (data.response[i].attachments[0].type === "sticker") {
-                            sticker = data.response[i].attachments[0].sticker.photo_64;
+                    if (data.response.items[i].attachments) {
+                        type = data.response.items[i].attachments[0].type;
+                        if (data.response.items[i].attachments[0].type === "sticker") {
+                            sticker = data.response.items[i].attachments[0].sticker.photo_64;
                         }
                     }
-                    else if (data.response[i].fwd_messages) {
+                    else if (data.response.items[i].fwd_messages) {
                         type = "forward messages";
                     }
                     let message = VKMessage.create({
-                            text: data.response[i].body,
-                            date: data.response[i].date,
+                            text: data.response.items[i].body,
+                            date: data.response.items[i].date,
                             type: type,
-                            out: data.response[i].out,
-                            readState: data.response[i].read_state,
+                            out: data.response.items[i].out,
+                            readState: data.response.items[i].read_state,
                             stickerImg: sticker,
                     });
                     this.get("messages").pushObject(message);
