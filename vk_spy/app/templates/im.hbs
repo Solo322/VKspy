@@ -9,10 +9,21 @@
     <h3><button {{action "getDialogs"}} class="btn btn-default">Get dialogs</button></h3>
 --}}
 
-    {{#vk-log-in}}
+
+{{#if isExpanded}}
+  <button {{action "toggleBody"}}>Hide Body</button>
+
+{{else}}
+  <button {{action "toggleBody"}}>Show Body</button>
+{{/if}}
+
+
+    {{#vk-log-in controller=this}}
     {{/vk-log-in}}
 
-    {{#user-dialogs}}
+    {{#user-dialogs controller=this}}
     {{/user-dialogs}}
+
+
 
 </div>

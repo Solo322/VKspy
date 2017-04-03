@@ -5,6 +5,7 @@ import VKMessage from './../objects/vk-message';
 const DIALOG_COUNT = 5;
 const MESSAGE_COUNT = 10;
 
+
 export default Ember.Component.extend({
 
     authService: Ember.inject.service('auth-users'),
@@ -35,6 +36,14 @@ export default Ember.Component.extend({
     server: null,
     key: null,
     ts: null,
+
+    _setup: Ember.on('didInsertElement', function(){
+        this.on('getCurrentUserCall', this, 'helloWorld');
+    }),
+
+    helloWorld(){
+        console.log('HELLO WORLD');
+    },
 
     didReceiveAttrs() {
         this._super(...arguments);
@@ -191,22 +200,28 @@ export default Ember.Component.extend({
         let url = "https://api.vk.com/method/messages.getDialogs?access_token=";
         url += this.get('currentUser').token;
         url += "&count=" + DIALOG_COUNT;
+        url += "&unread=0";
+        url += "&v=5.63";
 
         $.getJSON(url).then(data => {
             if( data.error ){
                 alert('Пользователь не авторизован');
                 return;
             }
-            data.response.shift();
-            for (var i = data.response.length - 1; i >= 0; i--) {
+
+            console.log( 'getDialogs' );
+            console.log( data );
+
+            //data.response.shift();
+            for (var i = data.response.items.length - 1; i >= 0; i--) {
                 let contex = this;
-                let dialog_response = data.response[i];
+                let dialog_response = data.response.items[i];
                 console.log(dialog_response);
                 // Чатики пока игнорируем
-                if(dialog_response.chat_id){
+                if(dialog_response.message.chat_id){
                     continue;
                 }
-                this.get('vkUsers').getUserByID( data.response[i].uid, function( user ){
+                this.get('vkUsers').getUserByID( data.response.items[i].message.user_id, function( user ){
                     let find_dialog = contex.get('dialogs');
                     let type = null;
                     let sticker = null;
@@ -215,44 +230,44 @@ export default Ember.Component.extend({
                         if (dialog_response.attachments[0].type === "sticker") {
                             sticker = dialog_response.attachments[0].sticker.photo_64;
                         }
-                    }
-                    else if (dialog_response.fwd_messages) {
+                    else if (dialog_response.message.fwd_messages) {
                         type = "forward messages";
                     }
                     if( find_dialog && find_dialog.findBy( 'user.id', user.id))
                     {
-                        find_dialog.message.text = dialog_response.body;
-                        find_dialog.message.date = dialog_response.date;
+                        find_dialog.message.text = dialog_response.message.body;
+                        find_dialog.message.date = dialog_response.message.date;
                         find_dialog.message.type = type;
-                        find_dialog.message.out = dialog_response.out;
-                        find_dialog.message.reaadState = dialog_response.read_state;
+                        find_dialog.message.out = dialog_response.message.out;
+                        find_dialog.message.readState = dialog_response.message.read_state;
+                        find_dialog.unread = dialog_response.unread;
                         find_dialog.message.stickerImg = sticker;
                     }
                     else
                     {
                         let message = VKMessage.create({
-                            text: dialog_response.body,
-                            date: dialog_response.date,
+                            text: dialog_response.message.body,
+                            date: dialog_response.message.date,
                             type: type,
-                            out: dialog_response.out,
-                            readState: dialog_response.read_state,
+                            out: dialog_response.message.out,
+                            readState: dialog_response.message.read_state,
                             stickerImg: sticker,
                         });
                         let dialog = VKDialog.create(
                         {
                             user: user,
-                            message: message,                            
+                            message: message,
+                            unread: dialog_response.unread,                             
                         });
                         contex.get('dialogs').pushObject(dialog);
                     }
-                } );
+                };
             }
         });
     },
 
     actions: 
     {
-
         moreMessages(){
             let url = "https://api.vk.com/method/messages.getHistory?access_token=";
             url += this.get('authUsers').getCurrentUser().token;
@@ -293,6 +308,7 @@ export default Ember.Component.extend({
 
         // Test func
         getCurrentUser(){
+            console.log('getCurrentUser!!!!!');
             console.log(this.get('currentUser'));
         },
 
