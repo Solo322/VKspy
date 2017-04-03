@@ -223,12 +223,12 @@ export default Ember.Component.extend({
                     let find_dialog = contex.get('dialogs');
                     let type = null;
                     let sticker = null;
-                    if (dialog_response.attachments) 
+                    if (dialog_response.message.attachments) 
                     {
-                        type = dialog_response.attachments[0].type;
-                        if (dialog_response.attachments[0].type === "sticker") 
+                        type = dialog_response.message.attachments[0].type;
+                        if (dialog_response.message.attachments[0].type === "sticker") 
                         {
-                            sticker = dialog_response.attachments[0].sticker.photo_64;
+                            sticker = dialog_response.message.attachments[0].sticker.photo_64;
                         }
                     }
                     else if (dialog_response.message.fwd_messages)
