@@ -7,6 +7,12 @@ const {BrowserWindow, ipcMain} = remote;
 let auth_users = null;
 
 export default Ember.Component.extend({
+
+
+    loginFail(){
+        console.log('loginFail!!!!!');
+    },
+
     actions: {
         selectUser( item ){
             this.get('authUsers').set('currentUser',item);
@@ -18,6 +24,13 @@ export default Ember.Component.extend({
 
         currentUser(){
           console.log(this.get('authUsers').getCurrentUser());  
+          console.log('sendData');
+
+this.get('controller').on('loginDidFail', this, this.loginFail);
+
+          //this.get('controller').send('sendData', 1);
+          //this.get('controller').helloWorld();
+          
         },
 
         logIn(){

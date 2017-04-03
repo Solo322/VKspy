@@ -66,10 +66,10 @@
       <br>
       {{#if dialog.message.type}}
         <font color = "blue">
-          <p class = "blue{{if dialog.message.readState "read" "unread"}}"> {{dialog.message.type}} </p>
+          <p class = "blue{{if dialog.message.readState "read" "unread"}}"> {{dialog.message.type}} </p> {{#if dialog.unread}} {{dialog.unread}} {{/if}}
         </font>
       {{else}}
-        <p class = "{{if dialog.message.readState "read" "unread"}}"> {{dialog.message.text}} </p>
+        <p class = "{{if dialog.message.readState "read" "unread"}}"> {{dialog.message.text}} </p> {{#if dialog.unread}} {{dialog.unread}} {{/if}}
       {{/if}}
 
       <button {{action "goToDialog" dialog.user.id}} class="btn btn-default">Перейти к диалогу</button>
