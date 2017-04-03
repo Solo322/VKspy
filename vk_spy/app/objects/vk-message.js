@@ -6,5 +6,5 @@ export default Ember.Object.extend({
     type: null,
     out: null,
     readState: null, 
-    stickerImg: null,
+    Img: null,
 });

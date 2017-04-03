@@ -80,11 +80,17 @@ export default Ember.Component.extend({
             data.response.shift();
             for (var i = data.response.length - 1; i >= 0; i--) {
                 let type = null;
-                let sticker = null;
+                let img = null;
                 if (data.response[i].attachments) {
                     type = data.response[i].attachments[0].type;
                     if (data.response[i].attachment[0].type === "sticker") {
-                        sticker = data.response[i].attachment[0].sticker.photo_64;
+                        img = data.response[i].attachment[0].sticker.photo_128;
+                    }
+                    else if (data.response[i].attachment[0].type === "photo") {
+                        img = data.response[i].attachment[0].photo.photo_130;
+                    }
+                    else if (data.response[i].attachment[0].type === "gift") {
+                        img = data.response[i].attachment[0].gift.thumb_96;
                     }
                 }
                 else if (data.response[i].fwd_messages) {
@@ -96,7 +102,7 @@ export default Ember.Component.extend({
                         type: type,
                         out: data.response[i].out,
                         readState: data.response[i].read_state,
-                        stickerImg: server,
+                        Img: img,
                     });
                  console.log( 'getMessageByID' );
                  console.log( message );
@@ -163,11 +169,17 @@ export default Ember.Component.extend({
             data.response.shift();
             for (var i = data.response.length - 1; i >= 0; i--) {
                 let type = null;
-                let sticker = null;
+                let img = null;
                 if (data.response[i].attachments) {
                     type = data.response[i].attachments[0].type;
                     if (data.response[i].attachments[0].type === "sticker") {
-                        sticker = data.response[i].attachments[0].sticker.photo_64;
+                        img = data.response[i].attachments[0].sticker.photo_128;
+                    }
+                    else if (data.response[i].attachments[0].type === "photo") {
+                        img = data.response[i].attachments[0].photo.photo_130;
+                    }
+                    else if (data.response[i].attachments[0].type === "gift") {
+                        img = data.response[i].attachments[0].gift.thumb_96;
                     }
                 }
                 else if (data.response[i].fwd_messages) {
@@ -179,7 +191,7 @@ export default Ember.Component.extend({
                         type: type,
                         out: data.response[i].out,
                         readState: data.response[i].read_state,
-                        stickerImg: sticker,
+                        Img: img,
                     });
                 this.get("messages").pushObject(message);
             }
@@ -210,8 +222,7 @@ export default Ember.Component.extend({
             }
             console.log( 'getDialogs' );
             console.log( data );
-            for (var i = data.response.items.length - 1; i >= 0; i--) 
-            {
+            for (var i = data.response.items.length - 1; i >= 0; i--) {
                 let contex = this;
                 let dialog_response = data.response.items[i];
                 console.log(dialog_response);
@@ -222,13 +233,17 @@ export default Ember.Component.extend({
                 this.get('vkUsers').getUserByID( data.response.items[i].message.user_id, function( user ){
                     let find_dialog = contex.get('dialogs');
                     let type = null;
-                    let sticker = null;
-                    if (dialog_response.message.attachments) 
-                    {
+                    let img = null;
+                    if (dialog_response.message.attachments) {
                         type = dialog_response.message.attachments[0].type;
-                        if (dialog_response.message.attachments[0].type === "sticker") 
-                        {
-                            sticker = dialog_response.message.attachments[0].sticker.photo_64;
+                        if (dialog_response.message.attachments[0].type === "sticker") {
+                            img = dialog_response.message.attachments[0].sticker.photo_128;
+                        }
+                        else if (dialog_response.message.attachments[0].type === "photo") {
+                            img = dialog_response.message.attachments[0].photo.photo_130;
+                        }
+                        else if (dialog_response.message.attachments[0].type === "gift") {
+                            img = dialog_response.message.attachments[0].gift.thumb_96;
                         }
                     }
                     else if (dialog_response.message.fwd_messages)
@@ -243,17 +258,16 @@ export default Ember.Component.extend({
                         find_dialog.message.out = dialog_response.message.out;
                         find_dialog.message.readState = dialog_response.message.read_state;
                         find_dialog.unread = dialog_response.unread;
-                        find_dialog.message.stickerImg = sticker;
+                        find_dialog.message.Img = img;
                     }
-                    else
-                    {
+                    else {
                         let message = VKMessage.create({
                             text: dialog_response.message.body,
                             date: dialog_response.message.date,
                             type: type,
                             out: dialog_response.message.out,
                             readState: dialog_response.message.read_state,
-                            stickerImg: sticker,
+                            Img: img,
                         });
                         let dialog = VKDialog.create({
                             user: user,
@@ -281,26 +295,31 @@ export default Ember.Component.extend({
                 data.response.shift();
                 for (var i = data.response.length - 1; i >= 0; i--) {
                     let type = null;
-                    let sticker = null;
+                    let img = null;
                     if (data.response[i].attachments) {
                         type = data.response[i].attachments[0].type;
-                        console.log();
                         if (data.response[i].attachments[0].type === "sticker") {
-                            sticker = data.response[i].attachments[0].sticker.photo_64;
+                            img = data.response[i].attachments[0].sticker.photo_128;
+                        }
+                        else if (data.response[i].attachments[0].type === "photo") {
+                            img = data.response[i].attachments[0].photo.photo_130;
+                        }
+                        else if (data.response[i].attachments[0].type === "gift") {
+                            img = data.response[i].attachments[0].gift.thumb_96;
                         }
                     }
                     else if (data.response[i].fwd_messages) {
                         type = "forward messages";
                     }
-                     let message = VKMessage.create({
+                    let message = VKMessage.create({
                             text: data.response[i].body,
                             date: data.response[i].date,
                             type: type,
                             out: data.response[i].out,
                             readState: data.response[i].read_state,
-                            stickerImg: sticker,
+                            Img: img,
                         });
-                     this.get("messages").pushObject(message);
+                    this.get("messages").pushObject(message);
                 }
                 console.log('getHistory');
                 console.log(data);
@@ -351,11 +370,17 @@ export default Ember.Component.extend({
 
                 for (var i = data.response.items.length - 1; i >= 0; i--) {
                     let type = null;
-                    let sticker = null;
+                    let img = null;
                     if (data.response.items[i].attachments) {
                         type = data.response.items[i].attachments[0].type;
                         if (data.response.items[i].attachments[0].type === "sticker") {
-                            sticker = data.response.items[i].attachments[0].sticker.photo_64;
+                            img = data.response.items[i].attachments[0].sticker.photo_128;
+                        }
+                        else if (data.response.items[i].attachments[0].type === "photo") {
+                            img = data.response.items[i].attachments[0].photo.photo_130;
+                        }
+                        else if (data.response.items[i].attachments[0].type === "gift") {
+                            img = data.response.items[i].attachments[0].gift.thumb_96;
                         }
                     }
                     else if (data.response.items[i].fwd_messages) {
@@ -367,7 +392,7 @@ export default Ember.Component.extend({
                             type: type,
                             out: data.response.items[i].out,
                             readState: data.response.items[i].read_state,
-                            stickerImg: sticker,
+                            Img: img,
                     });
                     this.get("messages").pushObject(message);
                 }
