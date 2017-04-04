@@ -5,8 +5,8 @@
     <p class="text-right">
       {{#if msg.type}}
         <font color = "blue">
-          {{#if msg.stickerImg}}
-            <p class = "blue{{if msg.readState "read" "unread"}}"> <img src = {{msg.stickerImg}} alt="Logo"> </p>
+          {{#if msg.Img}}
+            <p class = "blue{{if msg.readState "read" "unread"}}"> <img src = {{msg.Img}} alt="Logo"> </p>
           {{else}}
             <p class = "blue{{if msg.readState "read" "unread"}}"> {{msg.type}} </p>
           {{/if}}
@@ -19,8 +19,8 @@
     <p class="text-left">
       {{#if msg.type}}
         <font color = "blue">
-          {{#if msg.stickerImg}}
-            <p class = "blue{{if msg.readState "read" "unread"}}"> <img src = {{msg.stickerImg}} alt="Logo"> </p>
+          {{#if msg.Img}}
+            <p class = "blue{{if msg.readState "read" "unread"}}"> <img src = {{msg.Img}} alt="Logo"> </p>
           {{else}}
             <p class = "blue{{if msg.readState "read" "unread"}}"> {{msg.type}} </p>
           {{/if}}

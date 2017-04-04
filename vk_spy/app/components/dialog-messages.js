@@ -34,15 +34,25 @@ export default Ember.Component.extend({
         url += user_id;
         this.set('userID',user_id);
         $.getJSON(url).then(data => {
+        	console.log(data);
             data.response.shift();
             for (var i = data.response.length - 1; i >= 0; i--) {
                 let type = null;
-                let sticker = null;
+                let img = null;
                 if (data.response[i].attachments) {
                     type = data.response[i].attachments[0].type;
-                    if (data.response[i].attachments[0].type === "sticker") {
-                        sticker = data.response[i].attachments[0].sticker.photo_64;
+	                if (data.response[i].attachments[0].type === "sticker") {
+                        img = data.response[i].attachments[0].sticker.photo_128;
                     }
+                    else if (data.response[i].attachments[0].type === "photo") {
+                        img = data.response[i].attachments[0].photo.photo_130;
+                    }
+                    else if (data.response[i].attachments[0].type === "gift") {
+                        img = data.response[i].attachments[0].gift.thumb_96;
+	            	}
+	            	else if (data.response[i].fwd_messages) {
+	                	type = "forward messages";
+	            	}
                 }
                 else if (data.response[i].fwd_messages) {
                     type = "forward messages";
@@ -53,7 +63,7 @@ export default Ember.Component.extend({
                         type: type,
                         out: data.response[i].out,
                         readState: data.response[i].read_state,
-                        stickerImg: sticker,
+                        Img: img,
                     });
                 this.get("messages").pushObject(message);
             }
@@ -81,30 +91,35 @@ export default Ember.Component.extend({
 		        data.response.shift();
 		        for (var i = data.response.length - 1; i >= 0; i--) {
 		            let type = null;
-		            let sticker = null;
+		            let img = null;
 		            if (data.response[i].attachments) {
 		                type = data.response[i].attachments[0].type;
 		                console.log();
 		                if (data.response[i].attachments[0].type === "sticker") {
-		                    sticker = data.response[i].attachments[0].sticker.photo_64;
-		                }
-		            }
-		            else if (data.response[i].fwd_messages) {
-		                type = "forward messages";
-		            }
+                            img = data.response.items[i].attachments[0].sticker.photo_128;
+                        }
+                        else if (data.response.items[i].attachments[0].type === "photo") {
+                            img = data.response.items[i].attachments[0].photo.photo_130;
+                        }
+                        else if (data.response.items[i].attachments[0].type === "gift") {
+                            img = data.response.items[i].attachments[0].gift.thumb_96;
+		            	}
+		            	else if (data.response[i].fwd_messages) {
+		                	type = "forward messages";
+		            	}
 		             let message = VKMessage.create({
 		                    text: data.response[i].body,
 		                    date: data.response[i].date,
 		                    type: type,
 		                    out: data.response[i].out,
 		                    readState: data.response[i].read_state,
-		                    stickerImg: sticker,
+		                    Img: img,
 		                });
 		             this.get("messages").pushObject(message);
 		        }
 		        console.log('getHistory');
 		        console.log(data);
-		    });
+		    }});
 		},
 
         setActivity(){
