@@ -10,14 +10,6 @@
 --}}
 
 
-{{#if isExpanded}}
-  <button {{action "toggleBody"}}>Hide Body</button>
-
-{{else}}
-  <button {{action "toggleBody"}}>Show Body</button>
-{{/if}}
-
-
     {{#vk-log-in controller=this}}
     {{/vk-log-in}}
 
@@ -25,5 +17,7 @@
     {{/user-dialogs}}
 
 
+    {{#dialog-messages controller=this}}
+    {{/dialog-messages}}
 
 </div>

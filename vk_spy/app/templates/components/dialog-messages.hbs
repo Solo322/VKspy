@@ -1,0 +1,38 @@
+<button {{action "moreMessages"}} class="btn btn-primary btn-lg active">Еще</button>
+<div class="layer">
+  {{#each sortedMessages as |msg|}}
+  {{#if msg.out}}
+    <p class="text-right">
+      {{#if msg.type}}
+        <font color = "blue">
+          {{#if msg.stickerImg}}
+            <p class = "blue{{if msg.readState "read" "unread"}}"> <img src = {{msg.stickerImg}} alt="Logo"> </p>
+          {{else}}
+            <p class = "blue{{if msg.readState "read" "unread"}}"> {{msg.type}} </p>
+          {{/if}}
+        </font>
+      {{else}}
+        <p class = "{{if msg.readState "read" "unread"}}"> {{msg.text}} </p>
+      {{/if}}
+    </p>
+  {{else}}
+    <p class="text-left">
+      {{#if msg.type}}
+        <font color = "blue">
+          {{#if msg.stickerImg}}
+            <p class = "blue{{if msg.readState "read" "unread"}}"> <img src = {{msg.stickerImg}} alt="Logo"> </p>
+          {{else}}
+            <p class = "blue{{if msg.readState "read" "unread"}}"> {{msg.type}} </p>
+          {{/if}}
+        </font>
+      {{else}}
+        <p class = "{{if msg.readState "read" "unread"}}"> {{msg.text}} </p>
+      {{/if}}
+    </p>
+  {{/if}}
+  {{/each}}
+</div>
+
+
+{{input type="text" value=messageText enter="sendMessage" key-press="setActivity"}} 
+<button {{action "sendMessage"}} class="btn btn-default">Отправить</button>

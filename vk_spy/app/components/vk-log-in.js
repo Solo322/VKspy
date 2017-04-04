@@ -8,7 +8,6 @@ let auth_users = null;
 
 export default Ember.Component.extend({
 
-
     loginFail(){
         console.log('loginFail!!!!!');
     },
@@ -23,14 +22,10 @@ export default Ember.Component.extend({
         },
 
         currentUser(){
-          console.log(this.get('authUsers').getCurrentUser());  
-          console.log('sendData');
+            console.log(this.get('authUsers').getCurrentUser());  
+            console.log('sendData');
 
-this.get('controller').on('loginDidFail', this, this.loginFail);
-
-          //this.get('controller').send('sendData', 1);
-          //this.get('controller').helloWorld();
-          
+            this.get('controller').on('loginDidFail', this, this.loginFail);
         },
 
         logIn(){
@@ -44,14 +39,6 @@ this.get('controller').on('loginDidFail', this, this.loginFail);
                  height: 600,
                  parent: current
             });
-            // current.webContents.session.cookies.get(
-            //   {}, 
-            //  function( err, cookies )
-            //  {
-            //     console.log( 'Cookies' );
-            //     console.log( cookies );  
-            //  }
-            // )
 
             current.webContents.session.clearStorageData({
                     storages: [
