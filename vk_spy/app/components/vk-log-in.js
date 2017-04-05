@@ -31,12 +31,11 @@ export default Ember.Component.extend({
                 if( !this.get('VKSpy').user && this.get('authUsers').length > 0 ){
                     this.get('VKSpy').set('user', this.get('authUsers')[0] );
                 }
-                
-                if( !this.get('VKSpy').user ){
-                    //Если вообще нет пользователей, то сразу кинем окно авторизации
-                    this.logIn();
-                }
             }
+        }
+        if( !this.get('VKSpy').user ){
+            //Если вообще нет пользователей, то сразу кинем окно авторизации
+            this.logIn();
         }
     },
 
