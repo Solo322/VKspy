@@ -2,10 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend(Ember.Evented, {
 
-
-    authService: Ember.inject.service('auth-users'),
-    currentUser: Ember.computed.alias('authService.currentUser'),
-    currentUserChanged: Ember.observer('authService.currentUser', function() {
+    VKService: Ember.inject.service('vk-spy'),
+    currentUser: Ember.computed.alias('VKService.user'),
+    currentUserChanged: Ember.observer('VKService.user', function() {
         console.log('Controller::currentUserChanged');
         Ember.run.once(this, 'currentUserChangedTrigger');
         Ember.run.once(this, 'longPopServer');
@@ -90,7 +89,7 @@ export default Ember.Controller.extend(Ember.Evented, {
 
     getMessageByID( message_id ){
         let url = "https://api.vk.com/method/messages.getById?access_token=";
-        url += this.get('authUsers').getCurrentUser().token;
+        url += this.get('VKSpy').user.token;
         url += "&message_ids=" + message_id;
 
         $.getJSON(url).then(data => {

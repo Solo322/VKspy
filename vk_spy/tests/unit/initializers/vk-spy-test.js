@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import { initialize } from 'vk-spy/initializers/auth-users';
+import { initialize } from 'vk-spy/initializers/vk-spy';
 import { module, test } from 'qunit';
 import destroyApp from '../../helpers/destroy-app';
 
-module('Unit | Initializer | auth users', {
+module('Unit | Initializer | vk spy', {
   beforeEach() {
     Ember.run(() => {
       this.application = Ember.Application.create();

@@ -10,11 +10,6 @@ export default Ember.Component.extend({
     dialogs: [],
     dialogsSortingDesc: ['message.date:desc'],
     sortedDialogs: Ember.computed.sort('dialogs', 'dialogsSortingDesc'),
-  
-
-    helloWorld(){
-        console.log('HELLO WORLD');
-    },
 
     didReceiveAttrs() {
         this._super(...arguments);
@@ -36,11 +31,11 @@ export default Ember.Component.extend({
         this.set('dialogs', []);
 
         console.log('user-dialogs::getDialogs');
-        if( !this.get('authUsers').getCurrentUser() ){
+        if( !this.get('VKSpy').user ){
             return;
         }
         let url = "https://api.vk.com/method/messages.getDialogs?access_token=";
-        url += this.get('authUsers').getCurrentUser().token;
+        url += this.get('VKSpy').user.token;
         url += "&count=" + DIALOG_COUNT;
         url += "&unread=0";
         url += "&v=5.63";
@@ -113,14 +108,7 @@ export default Ember.Component.extend({
 
     actions: 
     {
-        // Test func
-        getCurrentUser(){
-            console.log('getCurrentUser!!!!!');
-            console.log(this.get('authUsers').getCurrentUser());
-        },
-
-        consoleDlgInfo( dialog )
-        {
+        consoleDlgInfo( dialog ){
             console.log( 'consoleDlgInfo' );
             console.log( dialog );
             console.log(this.get('vkUsers').users);

@@ -5,7 +5,7 @@
 <div>
     Аутентифицированные пользователи:
     <ul>
-      {{#each authUsers.users as |item|}}
+      {{#each authUsers as |item|}}
         <li>
           {{item.fullName}}
           <button {{action "selectUser" item}} class="btn btn-default">Выбрать</button>

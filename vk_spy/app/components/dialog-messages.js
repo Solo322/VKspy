@@ -27,8 +27,12 @@ export default Ember.Component.extend({
     	console.log('dialog-messages::goToDialog');
         this.set("messages", []);
 
+        if(!this.get('VKSpy').user){
+        	return;
+        }
+
         let url = "https://api.vk.com/method/messages.getHistory?access_token=";
-        url += this.get('authUsers').getCurrentUser().token;
+        url += this.get('VKSpy').user.token;
         url += "&count=" + MESSAGE_COUNT;
         url += "&user_id=";
         url += user_id;
@@ -81,7 +85,7 @@ export default Ember.Component.extend({
 
 	    moreMessages(){
 		    let url = "https://api.vk.com/method/messages.getHistory?access_token=";
-		    url += this.get('authUsers').getCurrentUser().token;
+		    url += this.get('VKSpy').user.token;
 		    url += "&offset=" + this.get('messages').length;
 		    url += "&count=" + MESSAGE_COUNT;
 		    url += "&user_id=";
@@ -124,7 +128,7 @@ export default Ember.Component.extend({
 
         setActivity(){
             let url = "https://api.vk.com/method/messages.setActivity?access_token=";
-            url += this.get('authUsers').getCurrentUser().token;
+            url += this.get('VKSpy').user.token;
             url += "&user_id=" + this.get('userID');
             url += "&type=typing";
             $.getJSON(url).then(data =>{
@@ -134,7 +138,7 @@ export default Ember.Component.extend({
 
         sendMessage(){
             let url = "https://api.vk.com/method/messages.send?access_token=";
-            url += this.get('authUsers').getCurrentUser().token;
+            url += this.get('VKSpy').user.token;
             url += "&message=";
             url += encodeURIComponent(this.get('messageText'));
             url += "&user_id=";
