@@ -10,6 +10,7 @@ export default Ember.Controller.extend(Ember.Evented, {
         Ember.run.once(this, 'longPopServer');
     }),
 
+    // Переменные для подписки на события
     server: null,
     key: null,
     ts: null,
@@ -121,23 +122,12 @@ export default Ember.Controller.extend(Ember.Evented, {
         });
     },
 
-    helloWorld(){
-        alert('helloWorld');
-    },
-
 
     actions: {
 
         toggleBody() {
             console.log('toggleBody');
             console.log(this.get('authService.currentUser'));
-          // this.toggleProperty('isExpanded');
-          // console.log('toggleBody');
-          // this.trigger('loginDidFail');
-        },
-
-        sendData(data) {
-          alert(data);
         },
 
         goToDialog( user_id ){

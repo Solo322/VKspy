@@ -7,8 +7,19 @@ const DIALOG_COUNT = 5;
 
 export default Ember.Component.extend({
 
+    /**
+     * Диалоги текущего пользователя
+     * @type {Array}
+     */
     dialogs: [],
+    /**
+     * Критерий сортировки диалогов
+     */
     dialogsSortingDesc: ['message.date:desc'],
+    /**
+     * Диалоги отсортированные по дате
+     * @type {Array}
+     */
     sortedDialogs: Ember.computed.sort('dialogs', 'dialogsSortingDesc'),
 
     didReceiveAttrs() {

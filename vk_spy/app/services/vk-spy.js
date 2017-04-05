@@ -1,10 +1,28 @@
 import Ember from 'ember';
 
+const METHOD_URL = "https://api.vk.com/method/";
+
 export default Ember.Service.extend({
 
+	/**
+	 * Текущий пользователь под которым работаем
+	 * @type {Object}
+	 */
 	user: null,
+	/**
+	 * Нужно ли показывать его онлайн
+	 * @type {Boolean}
+	 */
 	isOnline: null,
+	/**
+	 * Нужно ли показывать сообщения "печатает..."
+	 * @type {Boolean}
+	 */
 	isTyping: null,
+	/**
+	 * Нужно ли прочитывать сообщения при переходе к диалогу
+	 * @type {Boolean}
+	 */
 	isReading: null,
 
     usersChanged: function() {
@@ -28,10 +46,6 @@ export default Ember.Service.extend({
 
 	init(){
 		this.readCfg();
-	},
-
-	willDestroy(){
-
 	},
 
 	readCfg(){
@@ -61,4 +75,9 @@ export default Ember.Service.extend({
         };
         fs.writeFile('cfg.json', JSON.stringify(obj, null, 2), 'utf8', function(){} ); 
 	},
+
+
+	// VK Api
+
+	
 });

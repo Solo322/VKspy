@@ -5,11 +5,24 @@ const MESSAGE_COUNT = 10;
 
 export default Ember.Component.extend({
 
+	/**
+	 * id пользователя с которым находимся в диалоге
+	 * @type {String}
+	 */
 	userID: null,
-
-
+	/**
+	 * Сообщения диалога
+	 * @type {Array}
+	 */
     messages: [],
+    /**
+     * Критерий сортировки сообщений
+     */
     messagesSortingDesc: ['date'],
+    /**
+     * Сообщения отсортированные по дате
+     * @type {[type]}
+     */
     sortedMessages: Ember.computed.sort('messages', 'messagesSortingDesc'),    
 
     didReceiveAttrs() {
