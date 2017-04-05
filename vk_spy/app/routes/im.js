@@ -1,4 +1,3 @@
-import VKSpy from './../vk_api/vk';
 import Ember from 'ember';
 
 export default Ember.Route.extend({

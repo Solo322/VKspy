@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import VKSpy from './../vk_api/vk';
 import VKUser from './../objects/vk-user';
 
 const {remote} = require('electron');
@@ -77,10 +76,9 @@ export default Ember.Component.extend({
         // подписываем главное окно на событие query
         // и в случае перехвата алертим его данные
         ipcMain.on('query', (event, message) => {
+            
             let token = getURLParam( message.split("#")[1], "access_token" );
-            let service = new VKSpy( token ); 
-            service.userGet( function( response ){
-
+            _this.get('VKSpy').userGet( token, function( response ){
                 let user = VKUser.create({
                     firstName: response.response[0].first_name,
                     lastName: response.response[0].last_name,
@@ -88,7 +86,6 @@ export default Ember.Component.extend({
                     token: token
                 });
                 _this.addUser( user );
-                vkWindow.close();
             });
         });
 
@@ -100,6 +97,7 @@ export default Ember.Component.extend({
                     "let message = document.location.href;" +
                     "ipcRenderer.send('query', message);"
                     );
+                vkWindow.close();
             }
         });
 

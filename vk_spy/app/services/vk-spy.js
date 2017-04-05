@@ -49,7 +49,7 @@ export default Ember.Service.extend({
 	},
 
 	readCfg(){
-		console.log( 'vk-spy::readCfg' );
+		console.log( 'VKSpy::readCfg' );
         let fs = require('fs');
         if (fs.existsSync('cfg.json')) {
             let contents = fs.readFileSync('cfg.json', 'utf-8');
@@ -65,7 +65,7 @@ export default Ember.Service.extend({
 	},
 
 	writeCfg(){
-		console.log( 'vk-spy::writeCfg' );
+		console.log( 'VKSpy::writeCfg' );
         var fs = require('fs');
         let obj = {
         	user: this.get('user'),
@@ -79,5 +79,29 @@ export default Ember.Service.extend({
 
 	// VK Api
 
-	
+	/**
+	 * @param  {String} token - токен пользователя, для которого надо получить инфу 
+	 * @param  {Function} callback при получение ответа вызовем функцию
+	 * @return {Object} получаем данные о пользователи с указанным токеном
+	 */
+    userGet( token, callback ){  
+        let url = METHOD_URL + "users.get?access_token=" + token;
+        $.getJSON(url).then(data =>{
+                console.log('VKSpy::userGet');
+                callback( data );
+        });
+    },
+
+    setOnline(){
+    	// Делаем пользователя онлайн только если включена эта опция
+    	if( this.get('isOnline') ){
+	        let url = METHOD_URL + "account.setOnline?access_token=" + this.get('user').token + "&voip=0";
+	        $.getJSON(url).then(data =>{
+	                console.log('VKSpy::setOnline');
+	        }); 
+    	}
+    },
+
+    
+
 });
