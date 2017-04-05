@@ -1,6 +1,6 @@
 'use strinct';
 
-
+const METHOD_URL = "https://api.vk.com/method/";
 
 let SERVICE = null;
 
