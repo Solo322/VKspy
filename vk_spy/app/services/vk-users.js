@@ -2,6 +2,10 @@ import Ember from 'ember';
 import VKUser from './../objects/vk-user';
 
 export default Ember.Service.extend({
+	/**
+	 * Кэш данных пользователей с ВК
+	 * @type {Array}
+	 */
 	users: [],
 
 	getUserByID( id, callback ){
@@ -17,7 +21,6 @@ export default Ember.Service.extend({
 		url += "&fields=photo_50";
     	$.getJSON(url).then(data => {
     		if(data.response){
-
     			for (let i = 0; i < data.response.length; i++) 
     			{
     				let user = VKUser.create({

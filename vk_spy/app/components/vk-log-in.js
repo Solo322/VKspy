@@ -6,6 +6,10 @@ const {BrowserWindow, ipcMain} = remote;
 
 export default Ember.Component.extend({
 
+    /**
+     * Автозированные пользователи
+     * @type {Array}
+     */
     authUsers: [],
 
     authUsersChanged: function() {
@@ -37,6 +41,17 @@ export default Ember.Component.extend({
             this.logIn();
         }
     },
+
+    // didReceiveAttrs() {
+    //     this._super(...arguments);
+    //     this.get('controller').on('currentUserChanged', this, function(){
+    //         if( !this.get('VKSpy').user && this.get('authUsers').length === 0 ){
+    //             this.logIn();   
+    //         }
+    //     });
+    // },
+
+
 
     addUser( user ){
         let finded_user = this.get('authUsers').findBy( 'id', user.id );

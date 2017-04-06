@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import VKMessage from './../objects/vk-message';
+
 
 export default Ember.Controller.extend(Ember.Evented, {
 
@@ -34,94 +36,50 @@ export default Ember.Controller.extend(Ember.Evented, {
         let url = "https://api.vk.com/method/messages.getLongPollServer?access_token=";
         url += this.get('currentUser').token;
         url += "&need_pts=0";
-        let SERVICE = this;
+        let _this = this;
 
         $.getJSON(url).then(data => {
-            SERVICE.server = data.response.server;
-            SERVICE.key = data.response.key;
-            SERVICE.ts = data.response.ts;
+            _this.server = data.response.server;
+            _this.key = data.response.key;
+            _this.ts = data.response.ts;
 
-            SERVICE.requestToLongPopServer();
+            _this.requestToLongPopServer();
         }); 
     },
 
     requestToLongPopServer(){
         console.log('requestToLongPopServer');
-        let url = "https://";
-        url += this.server;
-        url += "?act=a_check&key=";
-        url += this.key;
-        url += "&ts=";
-        url += this.ts;
+        let url = "https://" + this.server;
+        url += "?act=a_check&key=" + this.key;
+        url += "&ts=" + this.ts;
         url += "&wait=25&mode=2&version=1";
-        let SERVICE = this;
+        let _this = this;
         $.getJSON(url).then(data => {
-            if( SERVICE.ts === data.ts ){
-                SERVICE.requestToLongPopServer();
+            if( _this.ts === data.ts ){
+                _this.requestToLongPopServer();
                 return;
             }
-            SERVICE.ts = data.ts;
+            _this.ts = data.ts;
             console.log('requestToLongPopServer answer');
             console.log( data );
             for( let i = 0; i < data.updates.length; i++ ){
                 if( data.updates[i][0] === 4 ){
                     // Получено новое сообщение
                     console.log('MESSAGE!!!');
-                    if( data.updates[i][3] === SERVICE.get('companion') ){
-                        this.getMessageByID( data.updates[i][1] );
-                    }
+                    _this.get('VKSpy').getMessageByID( data.updates[i][1], function( message ){
+                        _this.trigger( 'newMessageTrigger', message );
+                    });
                 }
-                else if( ( data.updates[i][0] === 7 || data.updates[i][0] === 6 ) ){
-                    // 7 Собеседник прочитал мои сообщения
+                else if( data.updates[i][0] === 6 || data.updates[i][0] === 7 ){
                     // 6 Я прочитал сообщения
-                    if( data.updates[i][1] === SERVICE.get('companion') ){
-                        let out = data.updates[i][0] === 7 ? 1 : 0;
-                        this.get('messages').forEach(function(item, index, enumerable) {
-                            if( Ember.get(item, 'out') === out ){
-                                Ember.set(item, "readState", 1);   
-                            }
-                        });
-                    }
+                    // 7 Собеседник прочитал мои сообщения
+                    let out = data.updates[i][0] === 7 ? 1 : 0;
+                    _this.trigger( 'readMessageTrigger', { out:out, user_id: data.updates[i][1] } );
                 }
             }
-            SERVICE.requestToLongPopServer();
+            _this.requestToLongPopServer();
         }); 
     },
-
-    getMessageByID( message_id ){
-        let url = "https://api.vk.com/method/messages.getById?access_token=";
-        url += this.get('VKSpy').user.token;
-        url += "&message_ids=" + message_id;
-
-        $.getJSON(url).then(data => {
-            data.response.shift();
-            for (var i = data.response.length - 1; i >= 0; i--) {
-                let type = null;
-                let sticker = null;
-                if (data.response[i].attachments) {
-                    type = data.response[i].attachments[0].type;
-                    if (data.response[i].attachment[0].type === "sticker") {
-                        sticker = data.response[i].attachment[0].sticker.photo_64;
-                    }
-                }
-                else if (data.response[i].fwd_messages) {
-                    type = "forward messages";
-                }
-                 let message = VKMessage.create({
-                        text: data.response[i].body,
-                        date: data.response[i].date,
-                        type: type,
-                        out: data.response[i].out,
-                        readState: data.response[i].read_state,
-                        stickerImg: server,
-                    });
-                 console.log( 'getMessageByID' );
-                 console.log( message );
-                 this.get("messages").pushObject(message);
-            }
-        });
-    },
-
 
     actions: {
 

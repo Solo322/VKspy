@@ -3,6 +3,10 @@ import VKMessage from './../objects/vk-message';
 
 const MESSAGE_COUNT = 10;
 
+// Чота как то фуфуфу
+// Но пока хз как по другому
+let _this = null;
+
 export default Ember.Component.extend({
 
 	/**
@@ -23,17 +27,37 @@ export default Ember.Component.extend({
      * Сообщения отсортированные по дате
      * @type {[type]}
      */
-    sortedMessages: Ember.computed.sort('messages', 'messagesSortingDesc'),    
+    sortedMessages: Ember.computed.sort('messages', 'messagesSortingDesc'),
 
     didReceiveAttrs() {
         this._super(...arguments);
 		this.get('controller').on('goToDialog', this, this.goToDialog);
 		this.get('controller').on('currentUserChanged', this, this.currentUserChanged);
+		this.get('controller').on('newMessageTrigger', this, this.receiveMessage);
+        this.get('controller').on('readMessageTrigger', this, this.readMessage);
     },
 
     currentUserChanged(){
-    	console.log( arguments );
     	this.set("messages", []);
+    },
+
+    receiveMessage( message ){
+    	console.log('dialog-messages::receiveMessage');
+    	console.log( message );
+    	if( message.userID === this.get('userID') ){
+	    	this.get('messages').pushObject(message);
+    	}
+    },
+
+    readMessage( read_info ){
+        // Если прочиитали соообщения для пользователя с которым в диалоге
+        if( read_info.user_id === this.get('userID') ){
+            this.get('messages').forEach(function(item, index, enumerable) {
+                if( Ember.get(item, 'out') === read_info.out ){
+                    Ember.set(item, "readState", 1);   
+                }
+            });
+        }
     },
 
     goToDialog( user_id ){
@@ -43,50 +67,17 @@ export default Ember.Component.extend({
         if(!this.get('VKSpy').user){
         	return;
         }
-
-        let url = "https://api.vk.com/method/messages.getHistory?access_token=";
-        url += this.get('VKSpy').user.token;
-        url += "&count=" + MESSAGE_COUNT;
-        url += "&user_id=";
-        url += user_id;
         this.set('userID',user_id);
-        $.getJSON(url).then(data => {
-        	console.log(data);
-            data.response.shift();
-            for (var i = data.response.length - 1; i >= 0; i--) {
-                let type = null;
-                let img = null;
-                if (data.response[i].attachments) {
-                    type = data.response[i].attachments[0].type;
-	                if (data.response[i].attachments[0].type === "sticker") {
-                        img = data.response[i].attachments[0].sticker.photo_128;
-                    }
-                    else if (data.response[i].attachments[0].type === "photo") {
-                        img = data.response[i].attachments[0].photo.photo_130;
-                    }
-                    else if (data.response[i].attachments[0].type === "gift") {
-                        img = data.response[i].attachments[0].gift.thumb_96;
-	            	}
-	            	else if (data.response[i].fwd_messages) {
-	                	type = "forward messages";
-	            	}
-                }
-                else if (data.response[i].fwd_messages) {
-                    type = "forward messages";
-                }
-                let message = VKMessage.create({
-                        text: data.response[i].body,
-                        date: data.response[i].date,
-                        type: type,
-                        out: data.response[i].out,
-                        readState: data.response[i].read_state,
-                        Img: img,
-                    });
-                this.get("messages").pushObject(message);
-            }
-            console.log('getHistory');
-            console.log(data);
-        });
+        _this = this;
+		this.get('VKSpy').getHistory( user_id, MESSAGE_COUNT, 0, this.parseGetHistoryAnswer);
+    },
+
+    parseGetHistoryAnswer( data ){
+        for (let i = data.response.items.length - 1; i >= 0; i--) {
+            let message = VKMessage.create();
+            message.initMessage( data.response.items[i] );
+            _this.get("messages").pushObject(message);
+        }
     },
 
     actions: 
@@ -97,66 +88,16 @@ export default Ember.Component.extend({
         },
 
 	    moreMessages(){
-		    let url = "https://api.vk.com/method/messages.getHistory?access_token=";
-		    url += this.get('VKSpy').user.token;
-		    url += "&offset=" + this.get('messages').length;
-		    url += "&count=" + MESSAGE_COUNT;
-		    url += "&user_id=";
-		    url += this.get('userID');
-
-		    $.getJSON(url).then(data => {
-		        data.response.shift();
-		        for (var i = data.response.length - 1; i >= 0; i--) {
-		            let type = null;
-		            let img = null;
-		            if (data.response[i].attachments) {
-		                type = data.response[i].attachments[0].type;
-		                console.log();
-		                if (data.response[i].attachments[0].type === "sticker") {
-                            img = data.response.items[i].attachments[0].sticker.photo_128;
-                        }
-                        else if (data.response.items[i].attachments[0].type === "photo") {
-                            img = data.response.items[i].attachments[0].photo.photo_130;
-                        }
-                        else if (data.response.items[i].attachments[0].type === "gift") {
-                            img = data.response.items[i].attachments[0].gift.thumb_96;
-		            	}
-		            	else if (data.response[i].fwd_messages) {
-		                	type = "forward messages";
-		            	}
-		             let message = VKMessage.create({
-		                    text: data.response[i].body,
-		                    date: data.response[i].date,
-		                    type: type,
-		                    out: data.response[i].out,
-		                    readState: data.response[i].read_state,
-		                    Img: img,
-		                });
-		             this.get("messages").pushObject(message);
-		        }
-		        console.log('getHistory');
-		        console.log(data);
-		    }});
+	    	_this = this;
+	    	this.get('VKSpy').getHistory( this.get('userID'), MESSAGE_COUNT, this.get('messages').length, this.parseGetHistoryAnswer );
 		},
 
         setActivity(){
-            let url = "https://api.vk.com/method/messages.setActivity?access_token=";
-            url += this.get('VKSpy').user.token;
-            url += "&user_id=" + this.get('userID');
-            url += "&type=typing";
-            $.getJSON(url).then(data =>{
-                console.log('setActivity');
-            });
+        	this.get('VKSpy').setActivity( this.get('userID') );
         },
 
         sendMessage(){
-            let url = "https://api.vk.com/method/messages.send?access_token=";
-            url += this.get('VKSpy').user.token;
-            url += "&message=";
-            url += encodeURIComponent(this.get('messageText'));
-            url += "&user_id=";
-            url += this.get('userID');
-            $.getJSON(url);
+        	this.get('VKSpy').sendMessage( this.get('userID'), this.get('messageText') );
             this.set('messageText', '');
         },
 	},
