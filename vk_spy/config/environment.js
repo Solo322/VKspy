@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'vk-spy',
+    modulePrefix: 'vk-app',
     environment: environment,
     rootURL: null,
     locationType: 'hash',
