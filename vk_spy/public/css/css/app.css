@@ -1,0 +1,366 @@
+@font-face {
+  font-family: "Bellorose";
+  src: url("../../fonts/FireyeGF.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: "Yanone";
+  src: url("../../fonts/Yanone/YanoneKaffeesatz-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: "Bellorose_2";
+  src: url("../../fonts/Bellerose.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+.bellorose-font {
+  font-family: "Bellorose"; }
+
+.bellorose-font-2 {
+  font-family: "Bellorose_2"; }
+
+body {
+  background-color: #fff;
+  width: 1000px;
+  height: 800px;
+  overflow: hidden; }
+
+header {
+  height: 50px;
+  background-color: #58a;
+  position: relative;
+  display: flex; }
+
+.search {
+  text-align: center;
+  position: relative;
+  padding: 10px;
+  display: block; }
+  .search input[type=text] {
+    height: 50;
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #f0f0f0;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    background-image: url("../../image/search-icon.png");
+    background-size: 23px 23px;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px; }
+  .search input[type=text]:focus {
+    background-color: white; }
+
+.dialog-menu {
+  height: 100%;
+  width: 350px;
+  display: block;
+  float: left; }
+  .dialog-menu a {
+    height: 26px;
+    padding: 12px;
+    width: 326px;
+    font-size: 24px;
+    text-decoration: none;
+    color: white;
+    display: flex;
+    font-family: "Yanone"; }
+  .dialog-menu a:hover {
+    background-color: #479; }
+  .dialog-menu nav {
+    display: none;
+    width: 100%;
+    z-index: 500; }
+    .dialog-menu nav li {
+      display: flex; }
+    .dialog-menu nav a {
+      background-color: #58a;
+      z-index: 500;
+      text-align: left;
+      display: flex; }
+    .dialog-menu nav input {
+      display: none; }
+    .dialog-menu nav img {
+      width: 30px;
+      height: 30px;
+      margin-left: 5px;
+      margin-right: 10px; }
+
+.friends {
+  height: 100%;
+  width: 100%;
+  font-family: "Tahoma";
+  font-size: 14px;
+  overflow: auto; }
+  .friends li {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: column; }
+    .friends li a {
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+      padding-top: 5px;
+      padding-bottom: 5px; }
+      .friends li a p {
+        display: block;
+        padding-top: 10px;
+        color: #000;
+        z-index: 0; }
+      .friends li a .name {
+        display: inline-block;
+        float: left;
+        font-weight: 600;
+        width: 200px; }
+      .friends li a .time {
+        display: inline-block;
+        color: #aaa; }
+      .friends li a .message {
+        color: #666; }
+      .friends li a img {
+        width: 60px;
+        height: 60px;
+        float: left;
+        border-radius: 25px;
+        margin-left: 10px;
+        margin-right: 10px; }
+
+.friends .selected .name {
+  color: #fff; }
+.friends .selected .time {
+  color: #fff; }
+.friends .selected .message {
+  color: #fff; }
+.friends .selected a {
+  background-color: #58a; }
+.friends .selected a:hover {
+  background-color: #58a; }
+.friends a:hover {
+  background-color: #f2f6fa; }
+
+.selected {
+  background-color: #58a; }
+
+.account-menu {
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column; }
+  .account-menu .is-active {
+    background-color: #479; }
+  .account-menu a {
+    margin-left: auto;
+    width: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 0;
+    display: inline-block; }
+    .account-menu a img {
+      display: block;
+      height: 30px;
+      width: 30px; }
+  .account-menu a:hover img.add-transition {
+    opacity: 0.75; }
+  .account-menu .account-selector-menu {
+    display: none;
+    margin-left: auto;
+    width: 250px;
+    height: 400px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); }
+    .account-menu .account-selector-menu ul {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 75%;
+      background-color: white;
+      z-index: 999; }
+      .account-menu .account-selector-menu ul li {
+        display: inline-block; }
+        .account-menu .account-selector-menu ul li a {
+          width: 100%;
+          padding: 5px;
+          height: 40px;
+          color: black;
+          display: inline-block; }
+          .account-menu .account-selector-menu ul li a img {
+            border-radius: 30px;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            float: left; }
+          .account-menu .account-selector-menu ul li a p {
+            display: inline-block;
+            padding-top: 10px;
+            font-family: "Tahoma";
+            font-weight: 600;
+            float: left; }
+    .account-menu .account-selector-menu .button-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 25%; }
+      .account-menu .account-selector-menu .button-container a {
+        padding-left: 0px;
+        background-color: #58a;
+        display: block;
+        width: 100%;
+        font-size: 24px;
+        font-family: "Yanone";
+        text-decoration: none;
+        color: white; }
+        .account-menu .account-selector-menu .button-container a img {
+          float: left;
+          margin-left: 10px;
+          margin-right: 10px; }
+      .account-menu .account-selector-menu .button-container a:hover {
+        background-color: #479; }
+
+.circle {
+  margin-left: 14px;
+  margin-top: 14px;
+  margin-bottom: 14px;
+  margin-right: 5px;
+  background-color: #9c7;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  float: left; }
+
+.account-selector-menu .selected a {
+  background-color: #58a; }
+  .account-selector-menu .selected a p {
+    color: white; }
+.account-selector-menu .selected a:hover {
+  background-color: #58a; }
+.account-selector-menu a:hover {
+  background-color: #f2f6fa; }
+
+.add-transition {
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s; }
+
+.dialog-menu-button {
+  height: 100%; }
+
+.main-window {
+  width: 100%;
+  height: 750px;
+  position: relative;
+  display: flex; }
+
+.dialog-list {
+  width: 350px;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+  border-right: 1px solid #eee;
+  z-index: 0; }
+
+.dialog-content {
+  height: 100%;
+  width: 650px;
+  display: flex;
+  flex-direction: column; }
+  .dialog-content .dialog-content-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column; }
+    .dialog-content .dialog-content-wrapper .im-history-wrapper {
+      height: 90%;
+      width: 100%;
+      display: flex;
+      justify-content: center; }
+      .dialog-content .dialog-content-wrapper .im-history-wrapper .im-history {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column; }
+    .dialog-content .dialog-content-wrapper .im-send-wrapper {
+      height: 10%;
+      width: auto;
+      padding: 5px;
+      display: flex;
+      flex-direction: column; }
+      .dialog-content .dialog-content-wrapper .im-send-wrapper .im-send {
+        height: 100%;
+        width: auto;
+        border-radius: 3px;
+        background-color: #eee;
+        display: flex;
+        border: 1px solid #ccc;
+        padding: 5px;
+        align-items: center;
+        justify-content: center; }
+        .dialog-content .dialog-content-wrapper .im-send-wrapper .im-send img {
+          width: 50px;
+          height: 50px;
+          border-radius: 20px;
+          padding: 6px; }
+        .dialog-content .dialog-content-wrapper .im-send-wrapper .im-send a {
+          margin-right: 5px; }
+          .dialog-content .dialog-content-wrapper .im-send-wrapper .im-send a img {
+            width: 50px;
+            height: 40px;
+            padding: 0px;
+            border-radius: 0px;
+            opacity: 0.75; }
+        .dialog-content .dialog-content-wrapper .im-send-wrapper .im-send a:hover img {
+          opacity: 1; }
+
+.message-field {
+  text-align: center;
+  position: relative;
+  padding: 10px;
+  display: block; }
+  .message-field input[type=text] {
+    height: 50;
+    width: 400px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-size: 23px 23px;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px; }
+  .message-field input[type=text]:focus {
+    background-color: white; }
+
+.message-wrap {
+  width: 100%;
+  min-height: 50px;
+  font-family: "Tahoma";
+  font-size: 14px;
+  margin-bottom: 10px; }
+  .message-wrap img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    float: left;
+    margin-right: 10px; }
+  .message-wrap p {
+    padding-top: 7px; }
+  .message-wrap .message-sender {
+    display: inline-block;
+    float: left;
+    font-weight: 600;
+    width: auto;
+    margin-right: 10px;
+    color: #479; }
+  .message-wrap .message-time {
+    display: inline-block;
+    color: #aaa; }
+  .message-wrap .message-data {
+    display: flex;
+    color: #333;
+    width: 80%; }
+
+/*# sourceMappingURL=app.css.map */

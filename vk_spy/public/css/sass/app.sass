@@ -1,0 +1,408 @@
+
+@mixin transition($transition...) 
+   -moz-transition:    $transition
+   -o-transition:      $transition
+   -webkit-transition: $transition
+   transition:         $transition
+
+@mixin transform($transforms) 
+   -moz-transform: $transforms
+   -o-transform: $transforms
+   -ms-transform: $transforms
+   -webkit-transform: $transforms
+   transform: $transforms
+
+@mixin transition-delay($delay...) 
+   -moz-transition-delay:    $delay
+   -o-transition-delay:      $delay
+   -webkit-transition-delay: $delay
+   transition-delay:         $delay
+
+@font-face
+   font-family: "Bellorose"
+   src: url("../../fonts/FireyeGF.ttf") format("truetype")
+   font-weight: normal
+   font-style: normal
+
+@font-face
+   font-family: "Yanone"
+   src: url("../../fonts/Yanone/YanoneKaffeesatz-Regular.otf") format("opentype")
+   font-weight: normal
+   font-style: normal
+
+@font-face
+   font-family: "Bellorose_2"
+   src: url("../../fonts/Bellerose.ttf") format("truetype")
+   font-weight: normal
+   font-style: normal
+
+.bellorose-font
+   font-family: "Bellorose"
+
+.bellorose-font-2
+   font-family: "Bellorose_2"
+
+$app-width: 1000px
+$app-height: 800px
+$app-menu-height: 50px
+$app-dialog-list: 350px
+$search-height: 60px
+$dialog-border-width: 2px
+$main-window-height: $app-height - $app-menu-height
+$dialog-content-width: $app-width - $app-dialog-list - $dialog-border-width
+$friend-height: 60px
+
+$online-color: #9c7
+$menu-color: #58a
+$dark-menu-color: #479
+$app-color: #fff
+
+body
+   background-color: #ddd
+
+.app
+   background-color: $app-color
+   width: $app-width
+   height: $app-height
+
+header
+   height: $app-menu-height
+   background-color: $menu-color
+   position: relative
+   display: flex
+
+.search
+   text-align: center
+   position: relative
+   padding: 10px
+   display: block
+   input[type=text]
+      height: 50
+      width: 100%
+      box-sizing: border-box
+      border: 2px solid rgb(240, 240, 240)
+      border-radius: 4px
+      font-size: 16px
+      background-color: rgb(240, 240, 240)
+      background-image: url('../../image/search-icon.png')
+      background-size: 23px 23px
+      background-position: 10px 10px
+      background-repeat: no-repeat
+      padding: 12px 20px 12px 40px
+   input[type=text]:focus
+      background-color: white
+
+.dialog-menu
+   height: 100%
+   width: $app-dialog-list 
+   display: block
+   float: left
+   a
+      height: 26px
+      padding: 12px
+      width: $app-dialog-list - 24px
+      font-size: 24px
+      text-decoration: none
+      color: white
+      display: flex
+      font-family: "Yanone"
+   a:hover
+      background-color: $dark-menu-color
+   nav
+      display: none
+      width: 100%
+      z-index: 500
+      li
+         display: flex
+      a
+         background-color: $menu-color
+         z-index: 500
+         text-align: left
+         display: flex
+      input
+         display: none
+      img
+         width: 30px
+         height: 30px
+         margin-left: 5px
+         margin-right: 10px
+
+.friends
+   height: 100%
+   width: 100%
+   font-family: "Tahoma"
+   font-size: 14px
+   overflow: auto
+   li
+      width: 100%
+      height: 70px
+      display: flex
+      flex-direction: column
+      a
+         width: 100%
+         height: 100%
+         text-decoration: none
+         padding-top: 5px
+         padding-bottom: 5px
+         p
+            display: block
+            padding-top: 10px
+            color: #000
+            z-index: 0
+         .name
+            display: inline-block
+            float: left
+            font-weight: 600
+            width: 200px
+         .time
+            display: inline-block
+            color: #aaa
+         .message
+            color: #666
+         img
+            width: 60px
+            height: 60px
+            float: left
+            border-radius: 25px
+            margin-left: 10px
+            margin-right: 10px
+
+.friends
+   .selected
+      .name
+         color: #fff
+      .time
+         color: #fff
+      .message
+         color: #fff
+      a
+         background-color: $menu-color
+      a:hover
+         background-color: $menu-color
+   a:hover
+      background-color: rgb(242, 246, 250)
+
+.selected
+   background-color: $menu-color
+
+.account-menu
+   z-index: 999
+   height: 100%
+   width: 100%
+   display: flex
+   flex-direction: column
+   .is-active
+      background-color: $dark-menu-color
+   a
+      margin-left: auto
+      width: 40px
+      padding-top: 10px
+      padding-bottom: 10px
+      padding-left: 10px
+      padding-right: 0
+      display: inline-block
+      img
+         display: block
+         height: 30px
+         width: 30px
+   a:hover
+      img.add-transition
+         opacity: 0.75
+   .account-selector-menu
+      display: none
+      margin-left: auto
+      width: 250px
+      height: 400px
+      box-shadow: 0 0 5px rgba(0,0,0,0.5)
+      ul
+         display: flex
+         flex-direction: column
+         width: 100%
+         height: 75%
+         background-color: white
+         z-index: 999
+         li
+            display: inline-block
+            a
+               width: 100%
+               padding: 5px
+               height: 40px
+               color: black
+               display: inline-block
+               img
+                  border-radius: 30px
+                  width: 40px
+                  height: 40px
+                  margin-right: 10px
+                  float: left
+               p
+                  display: inline-block
+                  padding-top: 10px
+                  font-family: "Tahoma"
+                  font-weight: 600
+                  float: left
+      .button-container
+         display: flex
+         flex-direction: column
+         width: 100%
+         height: 25%
+         a
+            padding-left: 0px
+            background-color: $menu-color
+            display: block
+            width: 100%
+            font-size: 24px
+            font-family: "Yanone"
+            text-decoration: none
+            color: white
+            img
+               float: left
+               margin-left: 10px
+               margin-right: 10px
+         a:hover
+            background-color: $dark-menu-color
+
+.circle
+   margin-left: 14px
+   margin-top: 14px
+   margin-bottom: 14px
+   margin-right: 5px
+   background-color: $online-color
+   width: 10px
+   height: 10px
+   border-radius: 50%
+   float: left
+
+.account-selector-menu
+   .selected
+      a
+         background-color: $menu-color
+         p
+            color: white
+      a:hover
+         background-color: $menu-color
+   a:hover
+      background-color: rgb(242, 246, 250)
+
+.add-transition
+   @include transition(0.3s)
+
+.dialog-menu-button
+   height: 100%
+
+.main-window
+   width: 100%
+   height: $main-window-height
+   position: relative
+   display: flex
+
+.dialog-list
+   width: $app-dialog-list
+   height: 100%
+   display: inline-block
+   position: relative
+   border-right: 1px solid #eee
+   z-index: 0
+
+.dialog-content
+   height: 100%
+   width: $app-width - $app-dialog-list
+   display: flex
+   flex-direction: column
+   .dialog-content-wrapper
+      width: 100%
+      height: 100%
+      display: flex
+      flex-direction: column
+      .im-history-wrapper
+         height: 90%
+         width: 100%
+         display: flex
+         justify-content: center
+         overflow: auto
+         .im-history
+            height: 100%
+            width: 100%
+            display: flex
+            flex-direction: column
+      .im-send-wrapper
+         height: 10%
+         width: auto
+         padding: 5px
+         display: flex
+         flex-direction: column
+         .im-send
+            height: 100%
+            width: auto
+            border-radius: 3px
+            background-color: #eee
+            display: flex
+            border: 1px solid #ccc
+            padding: 5px
+            align-items: center
+            justify-content: center
+            img
+               width: 50px
+               height: 50px
+               border-radius: 20px
+               padding: 6px
+            a
+               margin-right: 5px
+               img
+                  width: 50px
+                  height: 40px
+                  padding: 0px
+                  border-radius: 0px
+                  opacity: 0.75
+            a:hover
+               img
+                  opacity: 1
+
+.message-field
+   text-align: center
+   position: relative
+   padding: 10px
+   display: block
+   input[type=text]
+      height: 50
+      width: 400px
+      box-sizing: border-box
+      border: 1px solid #ccc
+      border-radius: 4px
+      font-size: 16px
+      background-color: white
+      background-size: 23px 23px
+      background-position: 10px 10px
+      background-repeat: no-repeat
+      padding: 12px 
+   input[type=text]:focus
+      background-color: white
+
+.message-wrap
+   width: 100%
+   min-height: 50px
+   font-family: "Tahoma"
+   font-size: 14px
+   margin-bottom: 10px
+   img
+      width: 50px
+      height: 50px
+      border-radius: 100%
+      float: left
+      margin-right: 10px
+   p
+      padding-top: 7px
+   .message-sender
+      display: inline-block
+      float: left
+      font-weight: 600
+      width: auto
+      margin-right: 10px
+      color: $dark-menu-color
+   .message-time
+      display: inline-block
+      color: #aaa
+   .message-data
+      display: flex
+      color: #333
+      width: 80%

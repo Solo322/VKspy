@@ -1,13 +1,243 @@
-<div class="jumbo">
+<link rel="stylesheet" href="libs/reset/reset.css" />
+<link rel="stylesheet" href="css/css/app.css" />
+<link rel="stylesheet" href="libs/menu-button/menu-button.css" />
+<link rel="stylesheet" href="libs/switchery/switchery.css" />
+<link rel="stylesheet" href="libs/nanoScroller/nanoscroller.css">
 
-    {{#vk-log-in controller=this}}
-    {{/vk-log-in}}
+<header>
+   <div class="dialog-menu">
+      <a href="#" class="c-hamburger c-hamburger--htx"  id="menu-button">
+         <span>toggle menu</span>
+         VK Spy
+      </a>
+      <nav>
+         <ul>
+            <li><a href="#" class="option"><input type="checkbox" class="js-switch" checked />Offline</a></li>
+            <li><a href="#" class="option"><input type="checkbox" class="js-switch" checked />Do not read</a></li>
+            <li><a href="#" class="option"><input type="checkbox" class="js-switch" checked />Hide typesetting</a></li>
+            <li><a href="#"><img src="image/spy.png">About</a></li>
+            <li><a href="#"><img src="image/logout.png">Logout</a></li>
+         </ul>
+      </nav>
+   </div>
+   <div class="account-menu">
+      <a href="#" id="openUserAccounts">
+         <img class="add-transition" src="image/profile.png">
+      </a>
+      <div class="account-selector-menu">
+         <div class="nano">
+            <div class="nano-content">
+               <ul>
+                  <li class="current-account selected">
+                     <a href="#">
+                        <img src="https://pp.userapi.com/c837530/v837530091/2650e/Sq7ThfynDYw.jpg">
+                        <p class="name">Лалах Иисусович</p>
+                        <span class="circle"></span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#">
+                        <img src="https://pp.userapi.com/c624516/v624516319/4b9c6/_K5l1_g86Kk.jpg">
+                        <p class="name">Люся Сергеева</p>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="button-container">
+            <a href="#" id="add-account-button">
+               <img src="image/add-profile-s.png">
+               Add new account
+            </a>
+            <a href="#" id="remove-account">
+               <img src="image/remove-profile-s.png">
+               Remove selected account
+            </a>
+         </div>
+      </div>
+   </div>
+</header>
+<section class="main-window">
+   <div class="dialog-list">
+      <div class="search">
+         <form>
+            <input type="text" name="search" placeholder="Search">
+         </form>
+      </div>
+      <div class="friends">
+         <div class="nano">
+            <div class="nano-content">
+               <ul>
+                  <li>
+                     <a href="#">
+                        <img src="https://pp.userapi.com/c626418/v626418357/61c57/4BXtQNAFRbE.jpg">
+                        <p class="name">Александр Козлов</p>
+                        <p class="time">14:48</p>
+                        <p class="message">Чо дел?</p>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#">
+                        <img src="https://cs540103.userapi.com/c636517/v636517582/11a7f/_kFZKbQnFbg.jpg">
+                        <p class="name">Илья Голубев</p>
+                        <p class="time">13:37</p>
+                        <p class="message">Гутен морген Василий</p>
+                     </a>
+                  </li>
+                  <li class="selected">
+                     <a href="#">
+                        <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                        <p class="name">Алексий Запойкин</p>
+                        <p class="time">02:28</p>
+                        <p class="message">Пошли танцевать тектонек</p>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="dialog-content">
+      <div class="dialog-content-wrapper">
+         <div class="im-history-wrapper">
+            <div class="nano">
+               <div class="nano-content">
+                  <ul class="im-history">
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                           <p class="message-sender">Алексий Запойкин</p>
+                           <p class="message-time">02:28</p>
+                           <p class="message-data">Дратути</p>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="message-wrap">
+                           <img src="https://pp.userapi.com/c837530/v837530091/2650e/Sq7ThfynDYw.jpg">
+                           <p class="message-sender">Лалах Иисусович</p>
+                           <p class="message-time">12:28</p>
+                           <p class="message-data">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.</p>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <div class="im-send-wrapper">
+            <div class="im-send">
+               <img src="https://pp.userapi.com/c837530/v837530091/2650e/Sq7ThfynDYw.jpg">
+               <div class="message-field">
+                  <form>
+                     <input type="text" name="messageField" placeholder="Enter message">
+                  </form>
+               </div>
+               <a href="#">
+                  <img src="image/send-sss.png">
+               </a>
+               <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
 
-    {{#user-dialogs controller=this}}
-    {{/user-dialogs}}
-
-
-    {{#dialog-messages controller=this}}
-    {{/dialog-messages}}
-
-</div>
+<script src="libs/menu-button/menu-button.js"></script> 
+<script src="libs/switchery/switchery.js"></script>
+<script src="libs/nanoScroller/jquery.nanoscroller.js"></script>
+<script src="js/common.js"></script>
