@@ -22,6 +22,11 @@ export default Ember.Component.extend({
      */
     sortedDialogs: Ember.computed.sort('dialogs', 'dialogsSortingDesc'),
 
+    /**
+     * No default div around the element.
+     */
+    tagName: '',
+
     didReceiveAttrs() {
         this._super(...arguments);
         this.getDialogs();

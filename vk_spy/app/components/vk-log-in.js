@@ -12,6 +12,11 @@ export default Ember.Component.extend({
      */
     authUsers: [],
 
+    /**
+     * No default div around the element.
+     */
+    tagName: '',
+
     authUsersChanged: function() {
         // TODO сделать запись один раз при выходе из программы!
         var fs = require('fs');
@@ -98,7 +103,8 @@ export default Ember.Component.extend({
                     firstName: response.response[0].first_name,
                     lastName: response.response[0].last_name,
                     id: response.response[0].uid,
-                    token: token
+                    token: token,
+                    photo_50: response.response[0].photo_50,
                 });
                 _this.addUser( user );
             });

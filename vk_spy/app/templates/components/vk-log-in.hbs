@@ -1,16 +1,46 @@
-
-<button {{action "currentUser"}} class="btn btn-default">Текущий пользователь</button>
-    
-<button {{action "logIn"}} class="btn btn-primary btn-lg active">Войти</button>
-<div>
-    Аутентифицированные пользователи:
-    <ul>
-      {{#each authUsers as |item|}}
-        <li>
-          {{item.fullName}}
-          <button {{action "selectUser" item}} class="btn btn-default">Выбрать</button>
-          <button {{action "removeUser" item}} class="btn btn-default">Удалить</button>
+<!-- <ul>
+    {{#each authUsers as |item|}}
+        <li class="current-account selected">
+            <a href="#">
+                <img src="https://pp.userapi.com/c837530/v837530091/2650e/Sq7ThfynDYw.jpg">
+                <p class="name">{{item.fullName}}</p>
+                <span class="circle"></span>
+            </a>
         </li>
-      {{/each}}
-    </ul>
-</div>
+    {{/each}}
+</ul> -->
+
+
+
+   <div class="account-menu">
+      <a href="#" id="openUserAccounts">
+         <img class="add-transition" src="image/profile.png">
+      </a>
+      <div class="account-selector-menu">
+         <div class="nano">
+            <div class="nano-content">
+                <ul>
+                    {{#each authUsers as |item|}}
+                        <li class="current-account selected">
+                            <a href="#">
+                                <img src={{item.photo_50}}>
+                                <p class="name">{{item.fullName}}</p>
+                                <span class="circle"></span>
+                            </a>
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
+         </div>
+         <div class="button-container">
+            <a href="#" {{action "logIn"}}  id="add-account-button">
+               <img src="image/add-profile-s.png">
+               Войти
+            </a>
+            <a href="#" id="remove-account">
+               <img src="image/remove-profile-s.png">
+               Удалить выбранный аккаунт
+            </a>
+         </div>
+      </div>
+   </div>

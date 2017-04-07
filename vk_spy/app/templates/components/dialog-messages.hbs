@@ -1,38 +1,30 @@
-<button {{action "moreMessages"}} class="btn btn-primary btn-lg active">Еще</button>
-<div class="layer">
-  {{#each sortedMessages as |msg|}}
-  {{#if msg.out}}
-    <p class="text-right">
-      {{#if msg.type}}
-        <font color = "blue">
-          {{#if msg.Img}}
-            <p class = "blue{{if msg.readState "read" "unread"}}"> <img src = {{msg.Img}} alt="Logo"> </p>
-          {{else}}
-            <p class = "blue{{if msg.readState "read" "unread"}}"> {{msg.type}} </p>
-          {{/if}}
-        </font>
-      {{else}}
-        <p class = "{{if msg.readState "read" "unread"}}"> {{msg.text}} </p>
-      {{/if}}
-    </p>
-  {{else}}
-    <p class="text-left">
-      {{#if msg.type}}
-        <font color = "blue">
-          {{#if msg.Img}}
-            <p class = "blue{{if msg.readState "read" "unread"}}"> <img src = {{msg.Img}} alt="Logo"> </p>
-          {{else}}
-            <p class = "blue{{if msg.readState "read" "unread"}}"> {{msg.type}} </p>
-          {{/if}}
-        </font>
-      {{else}}
-        <p class = "{{if msg.readState "read" "unread"}}"> {{msg.text}} </p>
-      {{/if}}
-    </p>
-  {{/if}}
-  {{/each}}
-</div>
-
-
-{{input type="text" value=messageText enter="sendMessage" key-press="setActivity"}} 
-<button {{action "sendMessage"}} class="btn btn-default">Отправить</button>
+ <div class="im-history-wrapper">
+    <div class="nano">
+       <div class="nano-content">
+          <ul class="im-history">
+          {{#each sortedMessages as |msg|}}
+             <li>
+                <div class="message-wrap">
+<!--                            <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                   <p class="message-sender">Алексий Запойкин</p> -->
+                   <p class="message-time">{{msg.time}}</p>
+                   <p class="message-data">{{msg.text}}</p>
+                </div>
+             </li>
+             {{/each}}
+          </ul>
+       </div>
+    </div>
+ </div>
+  <div class="im-send-wrapper">
+    <div class="im-send">
+       <img src={{VKSpy.user.photo_50}}>
+       <div class="message-field">
+             {{input type="text" name="messageField" value=messageText enter="sendMessage" key-press="setActivity" placeholder="Enter message"}}
+       </div>
+       <a href="#" {{action "sendMessage"}}>
+          <img src="image/send-sss.png">
+       </a>
+       <img src={{userPhoto}}>
+    </div>
+ </div>

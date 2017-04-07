@@ -88,6 +88,7 @@ export default Ember.Service.extend({
 	 */
     userGet( token, callback ){  
         let url = VK_METHOD_URL + "users.get?access_token=" + token;
+        url += "&fields=photo_50";
         $.getJSON(url).then(data =>{
                 console.log('VKSpy::userGet');
                 callback( data );

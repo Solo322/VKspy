@@ -38,6 +38,25 @@ export default Ember.Object.extend({
      */
     Img: null,
 
+    /**
+     * Время в формате ЧЧ:ММ
+     * @param  {Date}
+     * @return {[type]}   [description]
+     */
+    time: Ember.computed('date', function() {
+        let dt = new Date( 1000*this.get('date') );
+        // ФУФУФУ
+        // зато побыстрому
+        let time = '0';
+        if( dt.getHours() > 0 && dt.getHours() < 10 ) time += dt.getHours();
+        else time = dt.getHours();
+        time += ":";
+        if( dt.getMinutes() > 0 && dt.getMinutes() < 10 ) time += '0'+dt.getMinutes();
+        else time += dt.getMinutes();
+
+        return time;
+    }),
+
     initMessage( vk_message ){
         this.set( 'userID', vk_message.user_id );
         this.set( 'text', vk_message.body );

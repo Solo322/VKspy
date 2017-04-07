@@ -29,6 +29,11 @@ export default Ember.Component.extend({
      */
     sortedMessages: Ember.computed.sort('messages', 'messagesSortingDesc'),
 
+    /**
+     * No default div around the element.
+     */
+    tagName: '',
+
     didReceiveAttrs() {
         this._super(...arguments);
 		this.get('controller').on('goToDialog', this, this.goToDialog);
@@ -73,6 +78,8 @@ export default Ember.Component.extend({
     },
 
     parseGetHistoryAnswer( data ){
+        console.log('parseGetHistoryAnswer');
+        console.log(data);
         for (let i = data.response.items.length - 1; i >= 0; i--) {
             let message = VKMessage.create();
             message.initMessage( data.response.items[i] );
