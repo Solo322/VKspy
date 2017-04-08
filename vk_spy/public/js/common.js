@@ -18,9 +18,11 @@ if(totalHeight >= 666){
 
 var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 
-elems.forEach(function(html) {
-  var switchery = new Switchery(html, { size: "small", color: "#479" });
-});
+if( elems ){
+  elems.forEach(function(html) {
+    var switchery = new Switchery(html, { size: "small", color: "#479" });
+  });
+}
 
 
 $(".friends").on("click", function(event){

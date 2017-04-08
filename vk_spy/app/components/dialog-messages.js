@@ -98,12 +98,16 @@ export default Ember.Component.extend({
 		},
 
         setActivity(){
-        	this.get('VKSpy').setActivity( this.get('user').id );
+            if( this.get('user') ){
+        	   this.get('VKSpy').setActivity( this.get('user').id );
+            }
         },
 
         sendMessage(){
-        	this.get('VKSpy').sendMessage( this.get('user').id, this.get('messageText') );
-            this.set('messageText', '');
+            if( this.get('user') ){
+                this.get('VKSpy').sendMessage( this.get('user').id, this.get('messageText') );
+                this.set('messageText', '');
+            }
         },
 	},
 	
