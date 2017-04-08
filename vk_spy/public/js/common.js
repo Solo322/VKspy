@@ -4,17 +4,17 @@ $(".account-selector-menu").css("display", "block");
 $(".nano").nanoScroller();
 $(".account-selector-menu").css("display", "none");
 
-var totalHeight = 0;
-$("div.message-wrap").each(function(index){
-  totalHeight += parseInt($(this).height(), 10);
-});
+// var totalHeight = 0;
+// $("div.message-wrap").each(function(index){
+//   totalHeight += parseInt($(this).height(), 10);
+// });
 
-if(totalHeight >= 666){
-  $(".im-history").css("justify-content", "none");
-  $(".im-history-wrapper .nano").nanoScroller({ scroll: 'bottom' });
-} else {
-  $(".im-history").css("justify-content", "flex-end");
-}
+// if(totalHeight >= 666){
+//   $(".im-history").css("justify-content", "none");
+//   $(".im-history-wrapper .nano").nanoScroller({ scroll: 'bottom' });
+// } else {
+//   $(".im-history").css("justify-content", "flex-end");
+// }
 
 var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 

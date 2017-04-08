@@ -149,7 +149,7 @@ export default Ember.Service.extend({
      * @param  {Function} callback  когда результат будет получен вызовится эта функция
      * @return {[type]}             [description]
      */
-    getDialogs( count_dlg, callback ){
+    getDialogs( count_dlg, offset, callback ){
         console.log('VKSpy::getDialogs');
         if( !this.get('user') ){
         	console.log('Не выбран пользователь');
@@ -159,9 +159,15 @@ export default Ember.Service.extend({
         url += "&count=" + count_dlg;
         url += "&unread=0";
         url += "&preview_length=" + COUNT_SYMBOL_PREVIEW;
+        if( offset ){
+        	url += "&offset=" + offset;
+        }
         url += VK_API_VERSION;
         $.getJSON(url).then(data => {
             if( data.error ){
+
+            	console.log( data.error );
+                //alert('ERROR');
                 this.set('user', null);
                 return;
             }
@@ -231,14 +237,20 @@ export default Ember.Service.extend({
         });
     },
 
+    /**
+     * Прочитать сообщение от этого пользователя
+     * @param  {[type]} user_id сообщения какого пользователя надо прочитать
+     * @return {[type]}         [description]
+     */
     readMessage( user_id ){
      	console.log('VKSpy::readMessage');
         if(!this.get('user')){
         	console.log('Не выбран пользователь');
         	return;
         }
-        if( !this.get('isReading') )
+        if( !this.get('isReading') ){
         	return;	
+        }
         let url = VK_METHOD_URL + "messages.markAsRead?access_token=" + this.get('user').token;
         url += "&peer_id=" + user_id;
     	$.getJSON(url);

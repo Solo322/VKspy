@@ -42,6 +42,23 @@ export default Ember.Component.extend({
         this.get('controller').on('readMessageTrigger', this, this.readMessage);
     },
 
+    didRender() {
+        this._super(...arguments);
+        let totalHeight = 0; 
+        $("div.message-wrap").each(function(index){ 
+            totalHeight += parseInt($(this).height(), 10); 
+        }); 
+        if(totalHeight >= 650){
+            $(".im-history").css("justify-content", "none");
+            $(".im-history-wrapper .nano").nanoScroller();
+            $(".im-history-wrapper .nano").nanoScroller({ scroll: 'bottom' });
+            $(".im-history-wrapper .nano").bind("scrolltop", function(e){
+                console.log('scrolltop');
+                _this.moreMessages();
+            });
+        }
+    },
+
     currentUserChanged(){
     	this.set('messages', []);
         this.set('user', null);
@@ -50,7 +67,7 @@ export default Ember.Component.extend({
     receiveMessage( message ){
     	console.log('dialog-messages::receiveMessage');
     	console.log( message );
-    	if( message.userID === this.get('user').id ){
+    	if( this.get('user') && message.userID === this.get('user').id ){
 	    	this.get('messages').pushObject(message);
             this.get('VKSpy').readMessage( this.get('user').id );
     	}
@@ -58,7 +75,7 @@ export default Ember.Component.extend({
 
     readMessage( read_info ){
         // Если прочиитали соообщения для пользователя с которым в диалоге
-        if( read_info.user_id === this.get('user').id ){
+        if( this.get('user') && read_info.user_id === this.get('user').id ){
             this.get('messages').forEach(function(item, index, enumerable) {
                 if( Ember.get(item, 'out') === read_info.out ){
                     Ember.set(item, "readState", 1);   
@@ -85,17 +102,16 @@ export default Ember.Component.extend({
         }
     },
 
+    moreMessages(){
+        _this.get('VKSpy').getHistory( _this.get('user').id, MESSAGE_COUNT, _this.get('messages').length, _this.parseGetHistoryAnswer );
+    },
+
     actions: 
     {
         toggleBody() {
         	console.log('toggleBody');
             this.get('controller').send( 'toggleBody' );
         },
-
-	    moreMessages(){
-	    	_this = this;
-	    	this.get('VKSpy').getHistory( this.get('user').id, MESSAGE_COUNT, this.get('messages').length, this.parseGetHistoryAnswer );
-		},
 
         setActivity(){
             if( this.get('user') ){

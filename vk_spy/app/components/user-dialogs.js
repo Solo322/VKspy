@@ -2,8 +2,9 @@ import Ember from 'ember';
 import VKDialog from './../objects/vk-dialog';
 import VKMessage from './../objects/vk-message';
 
-const DIALOG_COUNT = 15;
+const DIALOG_COUNT = 30;
 
+let _this = null;
 
 export default Ember.Component.extend({
 
@@ -27,17 +28,33 @@ export default Ember.Component.extend({
      */
     tagName: '',
 
+    offset: 0,
+    lastOffset: 0,
+
     didReceiveAttrs() {
         this._super(...arguments);
-        this.getDialogs();
+
+        _this = this;
+        this.getDialogs( 0 );
         this.get('controller').on('currentUserChanged', this, this.currentUserChanged);
         this.get('controller').on('newMessageTrigger', this, this.receiveMessage);
         this.get('controller').on('readMessageTrigger', this, this.readMessage);
     },
 
-    didUpdateAttrs() {
+    // didUpdateAttrs() {
+    //     this._super(...arguments);
+    //     this.getDialogs( 0 );
+    // },
+
+    didRender() {
         this._super(...arguments);
-        this.getDialogs();
+
+        $(".friends .nano").bind("scrollend", function(e){
+            console.log('scrolltop');
+            // Чтобы не дудосить ВК введем такой костылёк
+            if( _this.get('lastOffset') !== _this.get('offset') )
+                _this.getDialogs( _this.get('offset') );
+        });
     },
 
     receiveMessage( message ){
@@ -65,21 +82,26 @@ export default Ember.Component.extend({
 
     currentUserChanged(){
         console.log('user-dialogs::currentUserChanged');
-        this.getDialogs();
+        this.getDialogs( 0 );
     },
 
-    getDialogs(){
+    getDialogs( offset ){
         console.log('user-dialogs::getDialogs');
-        this.set('dialogs', []);
-        let _this = this;
-        this.get('VKSpy').getDialogs( DIALOG_COUNT, function( data ){
+        this.set( 'lastOffset', offset );
+        if( offset === 0 ){
+            this.set('dialogs', []);
+            this.set( 'offset', 0 );
+        }
+        
+        this.get('VKSpy').getDialogs( DIALOG_COUNT, offset, function( data ){
 
             console.log( 'getDialogs' );
-            console.log( data );
+            //console.log( data );
+            _this.incrementProperty( 'offset', data.response.items.length );
             for (let i = data.response.items.length - 1; i >= 0; i--) {
                 
                 let dialog_response = data.response.items[i];
-                console.log(dialog_response);
+                //console.log(dialog_response);
                 // Чатики пока игнорируем
                 if(dialog_response.message.chat_id){
                     continue;
