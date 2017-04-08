@@ -105,21 +105,23 @@ header {
       padding-top: 5px;
       padding-bottom: 5px; }
       .friends li a p {
-        display: block;
-        padding-top: 10px;
+        display: flex;
+        margin-top: 10px;
         color: #000;
         z-index: 0; }
       .friends li a .name {
         display: inline-block;
         float: left;
         font-weight: 600;
-        width: 200px; }
+        width: 180px; }
       .friends li a .time {
         display: inline-block;
         color: #aaa; }
       .friends li a .message-read {
+        max-width: 230px;
         color: #666; }
       .friends li a .message-unread {
+        max-width: 230px;
         color: #666; 
         background-color: #F0F8FF;}
       .friends li a img {
@@ -365,7 +367,9 @@ header {
     float: left;
     margin-right: 10px; }
   .message-wrap p {
-    padding-top: 7px; }
+    margin-top: 7px;
+    display: flex; 
+  }
   .message-wrap .message-sender {
     display: inline-block;
     float: left;

@@ -1,9 +1,5 @@
 'use strict';
 
-$(".account-selector-menu").css("display", "block");
-$(".nano").nanoScroller();
-$(".account-selector-menu").css("display", "none");
-
 // var totalHeight = 0;
 // $("div.message-wrap").each(function(index){
 //   totalHeight += parseInt($(this).height(), 10);

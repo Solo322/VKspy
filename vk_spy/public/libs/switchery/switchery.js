@@ -1,6 +1,3 @@
-
-;(function(){
-
 /**
  * Require the module at `name`.
  *
@@ -1954,4 +1951,3 @@ if (typeof exports == "object") {
 } else {
   (this || window)["Switchery"] = require("switchery");
 }
-})();

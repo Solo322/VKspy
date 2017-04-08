@@ -50,7 +50,6 @@ export default Ember.Component.extend({
         }); 
         if(totalHeight >= 650){
             $(".im-history").css("justify-content", "none");
-            $(".im-history-wrapper .nano").nanoScroller();
             $(".im-history-wrapper .nano").nanoScroller({ scroll: 'bottom' });
             $(".im-history-wrapper .nano").bind("scrolltop", function(e){
                 console.log('scrolltop');

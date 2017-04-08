@@ -5,7 +5,7 @@ import VKUser from './../objects/vk-user';
 const VK_METHOD_URL = "https://api.vk.com/method/";
 const VK_API_VERSION = "&v=5.63";
 
-const COUNT_SYMBOL_PREVIEW = 70;
+const COUNT_SYMBOL_PREVIEW = 25;
 
 export default Ember.Service.extend({
 

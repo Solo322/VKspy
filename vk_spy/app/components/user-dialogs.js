@@ -55,6 +55,11 @@ export default Ember.Component.extend({
             if( _this.get('lastOffset') !== _this.get('offset') )
                 _this.getDialogs( _this.get('offset') );
         });
+
+        try {
+            $(".friends .nano").nanoScroller();
+        }
+        catch(err){}
     },
 
     receiveMessage( message ){

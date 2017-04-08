@@ -4,6 +4,11 @@
 <link rel="stylesheet" href="libs/switchery/switchery.css" />
 <link rel="stylesheet" href="libs/nanoScroller/nanoscroller.css">
 
+<script src="libs/menu-button/menu-button.js"></script> 
+<script src="libs/switchery/switchery.js"></script>
+<script src="libs/nanoScroller/jquery.nanoscroller.js"></script>
+<script src="js/common.js"></script>
+
 <header>
    <div class="dialog-menu">
       <a href="#" class="c-hamburger c-hamburger--htx"  id="menu-button">
@@ -12,9 +17,9 @@
       </a>
       <nav>
          <ul>
-            <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isOnline }}Offline</a></li>
-            <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isReading }}Do not read</a></li>
-            <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isTyping }}Hide typesetting</a></li>
+            <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isOnline }}Online</a></li>
+            <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isReading }}Read messages</a></li>
+            <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isTyping }}Typesetting</a></li>
             <li><a href="#"><img src="image/spy.png">About</a></li>
             <li><a href="#"><img src="image/logout.png">Logout</a></li>
          </ul>
@@ -111,8 +116,3 @@
       <!-- </div> -->
    <!-- </div> -->
 </section>
-
-<script src="libs/menu-button/menu-button.js"></script> 
-<script src="libs/switchery/switchery.js"></script>
-<script src="libs/nanoScroller/jquery.nanoscroller.js"></script>
-<script src="js/common.js"></script>
