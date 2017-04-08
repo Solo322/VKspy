@@ -132,7 +132,7 @@ export default Ember.Service.extend({
      */
     sendMessage( user_id, text ){
 
-    	if( this.get('user') ){
+    	if( this.get('user') && text ){
 	    	this.setOnline();
 		    let url = VK_METHOD_URL + "messages.send?access_token=" + this.get('user').token;
 		    url += "&message=" + encodeURIComponent( text );

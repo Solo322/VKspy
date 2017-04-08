@@ -25,7 +25,7 @@
                         <a href="#">
                             <img src={{item.photo_50}}>
                             <p class="name">{{item.fullName}}</p>
-                            <span class="circle"></span>
+                            <span class="delete-user" {{action "removeUser" item}}>x</span>
                         </a>
                     </li>
                 {{/each}}
@@ -37,10 +37,10 @@
            <img src="image/add-profile-s.png">
            Войти
         </a>
-        <a href="#" id="remove-account">
+<!--         <a href="#" id="remove-account">
            <img src="image/remove-profile-s.png">
            Удалить выбранный аккаунт
-        </a>
+        </a> -->
      </div>
   </div>
 </div>

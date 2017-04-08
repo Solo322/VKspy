@@ -23,7 +23,7 @@ elems.forEach(function(html) {
 });
 
 
-$(".friends a").on("click", function(event){
+$(".friends").on("click", function(event){
   $(".friends li.selected").removeClass("selected");
   $(event.target).closest("li").addClass("selected");
 });
@@ -35,13 +35,6 @@ $(".dialog-menu nav a.option").on("click", function(event){
   var input = inputList[0];
   input.checked = !input.checked;
   onChange(input);
-  // if(input.checked){
-  //   input.checked = false;
-  //   onChange(input);
-  // } else {
-  //   input.checked = true;
-  //   onChange(input);
-  // }
 });
 
 function onChange(el) {
