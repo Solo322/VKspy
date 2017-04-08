@@ -42,6 +42,7 @@ export default Ember.Component.extend({
             }
         }
         if( !this.get('VKSpy').user ){
+            console.log( 'нет пользователей' );
             //Если вообще нет пользователей, то сразу кинем окно авторизации
             this.logIn();
         }

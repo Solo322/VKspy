@@ -10,11 +10,9 @@ let _this = null;
 export default Ember.Component.extend({
 
 	/**
-	 * id пользователя с которым находимся в диалоге
+	 * Пользователя с которым находимся в диалоге
 	 * @type {String}
 	 */
-	userID: null,
-
     user:null,
 	/**
 	 * Сообщения диалога
@@ -45,7 +43,8 @@ export default Ember.Component.extend({
     },
 
     currentUserChanged(){
-    	this.set("messages", []);
+    	this.set('messages', []);
+        this.set('user', null);
     },
 
     receiveMessage( message ){
@@ -71,7 +70,6 @@ export default Ember.Component.extend({
     goToDialog( user ){
     	console.log('dialog-messages::goToDialog');
         this.set("messages", []);
-        //this.set('userID',user_id);
         this.set('user', user);
         _this = this;
 		this.get('VKSpy').getHistory( user.id, MESSAGE_COUNT, 0, this.parseGetHistoryAnswer);

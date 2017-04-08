@@ -5,6 +5,8 @@ import VKUser from './../objects/vk-user';
 const VK_METHOD_URL = "https://api.vk.com/method/";
 const VK_API_VERSION = "&v=5.63";
 
+const COUNT_SYMBOL_PREVIEW = 70;
+
 export default Ember.Service.extend({
 
 	/**
@@ -31,7 +33,7 @@ export default Ember.Service.extend({
     usersChanged: function() {
         // При каких либо изменения в users запишем это в файл
         // TODO сделать запись один раз при выходе из программы!
-        this.writeCfg();
+        this.writeCfg();;
     }.observes('user'),
 
     isOnlineChange: function(){
@@ -58,7 +60,7 @@ export default Ember.Service.extend({
             let contents = fs.readFileSync('cfg.json', 'utf-8');
             if( contents.length ){
             	let obj = JSON.parse(contents);
-            	let user = VKUser.create( obj.user );
+            	let user = obj.user ? VKUser.create( obj.user ) : null;
             	this.set('user', user );
             	this.set('isOnline', obj.isOnline);
             	this.set('isTyping', obj.isTyping);
@@ -156,10 +158,10 @@ export default Ember.Service.extend({
         let url = VK_METHOD_URL + "messages.getDialogs?access_token=" + this.get('user').token;
         url += "&count=" + count_dlg;
         url += "&unread=0";
+        url += "&preview_length=" + COUNT_SYMBOL_PREVIEW;
         url += VK_API_VERSION;
         $.getJSON(url).then(data => {
             if( data.error ){
-                alert('Пользователь не авторизован');
                 this.set('user', null);
                 return;
             }
