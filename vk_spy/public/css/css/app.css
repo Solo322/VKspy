@@ -117,8 +117,11 @@ header {
       .friends li a .time {
         display: inline-block;
         color: #aaa; }
-      .friends li a .message {
+      .friends li a .message-read {
         color: #666; }
+      .friends li a .message-unread {
+        color: #666; 
+        background-color: #F0F8FF;}
       .friends li a img {
         width: 60px;
         height: 60px;
@@ -131,8 +134,11 @@ header {
   color: #fff; }
 .friends .selected .time {
   color: #fff; }
-.friends .selected .message {
+.friends .selected .message-read {
   color: #fff; }
+.friends .selected .message-unread {
+  color: #fff;
+  background-color: #F0F8FF; }
 .friends .selected a {
   background-color: #58a; }
 .friends .selected a:hover {
@@ -362,5 +368,15 @@ header {
     display: flex;
     color: #333;
     width: 80%; }
+  .message-wrap .message-unread {
+    display: flex;
+    color: #333;
+    width: 80%;
+    background-color: #F0F8FF; }
+  .message-wrap .message-read {
+    display: flex;
+    color: #333;
+    width: 80%;
+  }
 
 /*# sourceMappingURL=app.css.map */

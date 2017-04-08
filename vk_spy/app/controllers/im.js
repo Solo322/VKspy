@@ -39,11 +39,13 @@ export default Ember.Controller.extend(Ember.Evented, {
         let _this = this;
 
         $.getJSON(url).then(data => {
-            _this.server = data.response.server;
-            _this.key = data.response.key;
-            _this.ts = data.response.ts;
+            if( data.response ){
+                _this.server = data.response.server;
+                _this.key = data.response.key;
+                _this.ts = data.response.ts;
 
-            _this.requestToLongPopServer();
+                _this.requestToLongPopServer();
+            }
         }); 
     },
 
@@ -88,9 +90,9 @@ export default Ember.Controller.extend(Ember.Evented, {
             console.log(this.get('authService.currentUser'));
         },
 
-        goToDialog( user_id ){
+        goToDialog( user ){
             console.log( 'Controller::goToDialog' );
-            this.trigger( 'goToDialog', user_id );
+            this.trigger( 'goToDialog', user );
         },
     }
 });

@@ -2,7 +2,7 @@ import Ember from 'ember';
 import VKDialog from './../objects/vk-dialog';
 import VKMessage from './../objects/vk-message';
 
-const DIALOG_COUNT = 5;
+const DIALOG_COUNT = 15;
 
 
 export default Ember.Component.extend({
@@ -114,9 +114,9 @@ export default Ember.Component.extend({
             console.log(this.get('vkUsers').users);
         },
 
-        goToDialog( user_id ){
+        goToDialog( user ){
             console.log('user-dialogs::goToDialog');
-            this.get('controller').send( 'goToDialog', user_id );
+            this.get('controller').send( 'goToDialog', user );
         },
     }
 });

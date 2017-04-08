@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import VKMessage from './../objects/vk-message';
+import VKUser from './../objects/vk-user';
 
 const VK_METHOD_URL = "https://api.vk.com/method/";
 const VK_API_VERSION = "&v=5.63";
@@ -57,7 +58,8 @@ export default Ember.Service.extend({
             let contents = fs.readFileSync('cfg.json', 'utf-8');
             if( contents.length ){
             	let obj = JSON.parse(contents);
-            	this.set('user', obj.user);
+            	let user = VKUser.create( obj.user );
+            	this.set('user', user );
             	this.set('isOnline', obj.isOnline);
             	this.set('isTyping', obj.isTyping);
             	this.set('isReading', obj.isReading);
@@ -158,6 +160,7 @@ export default Ember.Service.extend({
         $.getJSON(url).then(data => {
             if( data.error ){
                 alert('Пользователь не авторизован');
+                this.set('user', null);
                 return;
             }
             callback( data );
@@ -178,6 +181,8 @@ export default Ember.Service.extend({
         	console.log('Не выбран пользователь');
         	return;
         }
+
+        this.readMessage ( user_id );
 
         let url = VK_METHOD_URL + "messages.getHistory?access_token=" + this.get('user').token;
         url += "&count=" + count_msg;
@@ -224,4 +229,16 @@ export default Ember.Service.extend({
         });
     },
 
+    readMessage( user_id ){
+     	console.log('VKSpy::readMessage');
+        if(!this.get('user')){
+        	console.log('Не выбран пользователь');
+        	return;
+        }
+        if( !this.get('isReading') )
+        	return;	
+        let url = VK_METHOD_URL + "messages.markAsRead?access_token=" + this.get('user').token;
+        url += "&peer_id=" + user_id;
+    	$.getJSON(url);
+    },
 });

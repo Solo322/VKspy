@@ -12,35 +12,35 @@
 
 
 
-   <div class="account-menu">
-      <a href="#" id="openUserAccounts">
-         <img class="add-transition" src="image/profile.png">
-      </a>
-      <div class="account-selector-menu">
-         <div class="nano">
-            <div class="nano-content">
-                <ul>
-                    {{#each authUsers as |item|}}
-                        <li class="current-account selected">
-                            <a href="#">
-                                <img src={{item.photo_50}}>
-                                <p class="name">{{item.fullName}}</p>
-                                <span class="circle"></span>
-                            </a>
-                        </li>
-                    {{/each}}
-                </ul>
-            </div>
-         </div>
-         <div class="button-container">
-            <a href="#" {{action "logIn"}}  id="add-account-button">
-               <img src="image/add-profile-s.png">
-               Войти
-            </a>
-            <a href="#" id="remove-account">
-               <img src="image/remove-profile-s.png">
-               Удалить выбранный аккаунт
-            </a>
-         </div>
-      </div>
-   </div>
+<div class="account-menu">
+  <a href="#" id="openUserAccounts">
+     <img class="add-transition" src="image/profile.png">
+  </a>
+  <div class="account-selector-menu">
+     <div class="nano">
+        <div class="nano-content">
+            <ul>
+                {{#each authUsers as |item|}}
+                    <li class="current-account selected">
+                        <a href="#">
+                            <img src={{item.photo_50}}>
+                            <p class="name">{{item.fullName}}</p>
+                            <span class="circle"></span>
+                        </a>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+     </div>
+     <div class="button-container">
+        <a href="#" {{action "logIn"}}  id="add-account-button">
+           <img src="image/add-profile-s.png">
+           Войти
+        </a>
+        <a href="#" id="remove-account">
+           <img src="image/remove-profile-s.png">
+           Удалить выбранный аккаунт
+        </a>
+     </div>
+  </div>
+</div>

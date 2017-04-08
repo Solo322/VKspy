@@ -12,9 +12,9 @@
       </a>
       <nav>
          <ul>
-            <li><a href="#" class="option"><input type="checkbox" class="js-switch" checked />Offline</a></li>
-            <li><a href="#" class="option"><input type="checkbox" class="js-switch" checked />Do not read</a></li>
-            <li><a href="#" class="option"><input type="checkbox" class="js-switch" checked />Hide typesetting</a></li>
+            <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isOnline }}Offline</a></li>
+            <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isReading }}Do not read</a></li>
+            <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isTyping }}Hide typesetting</a></li>
             <li><a href="#"><img src="image/spy.png">About</a></li>
             <li><a href="#"><img src="image/logout.png">Logout</a></li>
          </ul>
@@ -89,13 +89,11 @@
          </div>
       </div>
    </div>
-   <div class="dialog-content">
-        <div class="dialog-content-wrapper">
+
 
                     {{#dialog-messages controller=this}}
                     {{/dialog-messages}}
-               </div>
-            </div>
+
 <!--          <div class="im-send-wrapper">
             <div class="im-send">
                <img src="https://pp.userapi.com/c837530/v837530091/2650e/Sq7ThfynDYw.jpg">

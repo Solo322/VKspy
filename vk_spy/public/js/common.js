@@ -33,13 +33,15 @@ $(".dialog-menu nav a.option").on("click", function(event){
   if(inputList.length === 0)
     return;
   var input = inputList[0];
-  if(input.checked){
-    input.checked = false;
-    onChange(input);
-  } else {
-    input.checked = true;
-    onChange(input);
-  }
+  input.checked = !input.checked;
+  onChange(input);
+  // if(input.checked){
+  //   input.checked = false;
+  //   onChange(input);
+  // } else {
+  //   input.checked = true;
+  //   onChange(input);
+  // }
 });
 
 function onChange(el) {

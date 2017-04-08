@@ -16,11 +16,19 @@
 <ul>
     {{#each sortedDialogs as |dialog|}}
     <li>
-        <a href="#" {{action "goToDialog" dialog.user.id}}>
+        <a href="#" {{action "goToDialog" dialog.user}}>
             <img src={{dialog.user.photo_50}}>
             <p class="name">{{dialog.user.fullName}}</p>
             <p class="time">{{dialog.message.time}}</p>
-            <p class="message">{{dialog.message.text}}</p>
+            <p class="message-{{if dialog.message.readState "read" "unread"}}">
+                {{#if dialog.message.type}}
+                    <font color = "blue">
+                        {{dialog.message.type}}
+                    </font>
+                {{else}}
+                    {{dialog.message.text}}
+                {{/if}}
+            </p>
         </a>
     </li>
     {{/each}}

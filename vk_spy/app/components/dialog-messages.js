@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import VKMessage from './../objects/vk-message';
 
-const MESSAGE_COUNT = 10;
+const MESSAGE_COUNT = 30;
 
 // Чота как то фуфуфу
 // Но пока хз как по другому
@@ -14,6 +14,8 @@ export default Ember.Component.extend({
 	 * @type {String}
 	 */
 	userID: null,
+
+    user:null,
 	/**
 	 * Сообщения диалога
 	 * @type {Array}
@@ -49,14 +51,15 @@ export default Ember.Component.extend({
     receiveMessage( message ){
     	console.log('dialog-messages::receiveMessage');
     	console.log( message );
-    	if( message.userID === this.get('userID') ){
+    	if( message.userID === this.get('user').id ){
 	    	this.get('messages').pushObject(message);
+            this.get('VKSpy').readMessage( this.get('user').id );
     	}
     },
 
     readMessage( read_info ){
         // Если прочиитали соообщения для пользователя с которым в диалоге
-        if( read_info.user_id === this.get('userID') ){
+        if( read_info.user_id === this.get('user').id ){
             this.get('messages').forEach(function(item, index, enumerable) {
                 if( Ember.get(item, 'out') === read_info.out ){
                     Ember.set(item, "readState", 1);   
@@ -65,16 +68,13 @@ export default Ember.Component.extend({
         }
     },
 
-    goToDialog( user_id ){
+    goToDialog( user ){
     	console.log('dialog-messages::goToDialog');
         this.set("messages", []);
-
-        if(!this.get('VKSpy').user){
-        	return;
-        }
-        this.set('userID',user_id);
+        //this.set('userID',user_id);
+        this.set('user', user);
         _this = this;
-		this.get('VKSpy').getHistory( user_id, MESSAGE_COUNT, 0, this.parseGetHistoryAnswer);
+		this.get('VKSpy').getHistory( user.id, MESSAGE_COUNT, 0, this.parseGetHistoryAnswer);
     },
 
     parseGetHistoryAnswer( data ){
@@ -96,15 +96,15 @@ export default Ember.Component.extend({
 
 	    moreMessages(){
 	    	_this = this;
-	    	this.get('VKSpy').getHistory( this.get('userID'), MESSAGE_COUNT, this.get('messages').length, this.parseGetHistoryAnswer );
+	    	this.get('VKSpy').getHistory( this.get('user').id, MESSAGE_COUNT, this.get('messages').length, this.parseGetHistoryAnswer );
 		},
 
         setActivity(){
-        	this.get('VKSpy').setActivity( this.get('userID') );
+        	this.get('VKSpy').setActivity( this.get('user').id );
         },
 
         sendMessage(){
-        	this.get('VKSpy').sendMessage( this.get('userID'), this.get('messageText') );
+        	this.get('VKSpy').sendMessage( this.get('user').id, this.get('messageText') );
             this.set('messageText', '');
         },
 	},
