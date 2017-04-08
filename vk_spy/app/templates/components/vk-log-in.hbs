@@ -22,7 +22,7 @@
             <ul>
                 {{#each authUsers as |item|}}
                     <li class="current-account selected">
-                        <a href="#">
+                        <a href="#" {{action "selectUser" item}}>
                             <img src={{item.photo_50}}>
                             <p class="name">{{item.fullName}}</p>
                             <span class="delete-user" {{action "removeUser" item}}>x</span>

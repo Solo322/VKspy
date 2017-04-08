@@ -136,7 +136,7 @@ export default Ember.Component.extend({
 
     actions: {
         selectUser( item ){
-            this.get('authUsers').set('currentUser',item);
+            this.get('VKSpy').set( 'user', item );
         },
 
         removeUser( item ){
