@@ -4,22 +4,10 @@
 <link rel="stylesheet" href="libs/switchery/switchery.css" />
 <link rel="stylesheet" href="libs/nanoScroller/nanoscroller.css">
 
-<script type="text/javascript">
-   function addScript( src ) {
-      var s = document.createElement( 'script' );
-      s.setAttribute( 'src', src );
-      document.body.appendChild( s );
-      return s;
-   }
-
-   addScript("libs/menu-button/menu-button.js").onload = function() {
-      addScript("libs/switchery/switchery.js").onload = function() {
-         addScript("libs/nanoScroller/jquery.nanoscroller.js").onload = function() {
-            addScript("js/common.js").onload = function() { return; }
-         }
-      }
-   }
-</script>
+<script src="libs/menu-button/menu-button.js"></script> 
+<script src="libs/switchery/switchery.js"></script>
+<script src="libs/nanoScroller/jquery.nanoscroller.js"></script>
+<script src="js/common.js"></script>
 
 <header>
    <div class="dialog-menu">
@@ -37,8 +25,31 @@
          </ul>
       </nav>
    </div>
-   {{#vk-log-in controller=this}}
-   {{/vk-log-in}}
+<!--    <div class="account-menu">
+      <a href="#" id="openUserAccounts">
+         <img class="add-transition" src="image/profile.png">
+      </a>
+      <div class="account-selector-menu">
+         <div class="nano">
+            <div class="nano-content">
+                {{#vk-log-in controller=this}}
+                {{/vk-log-in}}
+            </div>
+         </div>
+         <div class="button-container">
+            <a href="#" id="add-account-button">
+               <img src="image/add-profile-s.png">
+               Add new account
+            </a>
+            <a href="#" id="remove-account">
+               <img src="image/remove-profile-s.png">
+               Remove selected account
+            </a>
+         </div>
+      </div>
+   </div> -->
+                {{#vk-log-in controller=this}}
+                {{/vk-log-in}}
 </header>
 <section class="main-window">
    <div class="dialog-list">
@@ -50,12 +61,58 @@
       <div class="friends">
          <div class="nano">
             <div class="nano-content">
-               {{#user-dialogs controller=this}}
-               {{/user-dialogs}}
+                {{#user-dialogs controller=this}}
+                {{/user-dialogs}}
+
+<!--                <ul>
+                  <li>
+                     <a href="#">
+                        <img src="https://pp.userapi.com/c626418/v626418357/61c57/4BXtQNAFRbE.jpg">
+                        <p class="name">Александр Козлов</p>
+                        <p class="time">14:48</p>
+                        <p class="message">Чо дел?</p>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#">
+                        <img src="https://cs540103.userapi.com/c636517/v636517582/11a7f/_kFZKbQnFbg.jpg">
+                        <p class="name">Илья Голубев</p>
+                        <p class="time">13:37</p>
+                        <p class="message">Гутен морген Василий</p>
+                     </a>
+                  </li>
+                  <li class="selected">
+                     <a href="#">
+                        <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+                        <p class="name">Алексий Запойкин</p>
+                        <p class="time">02:28</p>
+                        <p class="message">Пошли танцевать тектонек</p>
+                     </a>
+                  </li>
+               </ul> -->
             </div>
          </div>
       </div>
    </div>
-   {{#dialog-messages controller=this}}
-   {{/dialog-messages}}
+
+
+                    {{#dialog-messages controller=this}}
+                    {{/dialog-messages}}
+
+<!--          <div class="im-send-wrapper">
+            <div class="im-send">
+               <img src="https://pp.userapi.com/c837530/v837530091/2650e/Sq7ThfynDYw.jpg">
+               <div class="message-field">
+                  <form>
+                     <input type="text" name="messageField" placeholder="Enter message">
+                  </form>
+               </div>
+               <a href="#">
+                  <img src="image/send-sss.png">
+               </a>
+               <img src="https://pp.userapi.com/c836320/v836320489/33b09/BGy3quDjBY4.jpg">
+            </div>
+         </div> -->
+      <!-- </div> -->
+   <!-- </div> -->
 </section>
