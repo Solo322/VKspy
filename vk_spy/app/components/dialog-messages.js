@@ -36,6 +36,8 @@ export default Ember.Component.extend({
 
     isWasTop: false,
 
+    lastOffset: 0,
+
     didReceiveAttrs() {
         this._super(...arguments);
 		this.get('controller').on('goToDialog', this, this.goToDialog);
@@ -59,7 +61,9 @@ export default Ember.Component.extend({
             $(".im-history-wrapper .nano").bind("scrolltop", function(e){
                 console.log('scrolltop');
                 _this.set('isWasTop', true);
-                _this.moreMessages();
+                if( _this.get('lastOffset') !== _this.get( 'messages' ).length ){
+                    _this.moreMessages();
+                }
             });
         }
     },
@@ -108,6 +112,7 @@ export default Ember.Component.extend({
     },
 
     moreMessages(){
+        _this.set( 'lastOffset', _this.get('messages').length );
         _this.get('VKSpy').getHistory( _this.get('user').id, MESSAGE_COUNT, _this.get('messages').length, _this.parseGetHistoryAnswer );
     },
 
