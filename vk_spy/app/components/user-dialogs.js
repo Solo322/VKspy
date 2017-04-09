@@ -149,12 +149,10 @@ export default Ember.Component.extend({
         searchDialog(){
             let search_text = this.get('searchText');
             if( search_text ){
+                search_text = search_text.toUpperCase();
                 let finded_dialogs = [];
                 this.get('dialogs').forEach(function(item, index, enumerable) {
-                    // if( Ember.get(item, 'out') === read_info.out ){
-                    //     Ember.set(item, "readState", 1);   
-                    // }
-                    if( Ember.get( item, 'user.fullName' ).search( search_text ) !== -1 ){
+                    if( Ember.get( item, 'user.fullName' ).toUpperCase().search( search_text ) !== -1 ){
                         finded_dialogs.pushObject( item );
                     }
                 });
