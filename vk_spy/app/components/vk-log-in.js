@@ -80,24 +80,26 @@ export default Ember.Component.extend({
              parent: current
         });
 
-        current.webContents.session.clearStorageData({
-                storages: [
-                    'cookies',
-                ],
-                quotas: [
-                    'temporary',
-                    'persistent',
-                    'syncable',
-                ],
-            }
-        );
+        if( current.webContents.session ){
+            current.webContents.session.clearStorageData({
+                    storages: [
+                        'cookies',
+                    ],
+                    quotas: [
+                        'temporary',
+                        'persistent',
+                        'syncable',
+                    ],
+                }, function(){}
+            );
+        }
 
         vkWindow.loadURL('https://oauth.vk.com/authorize?client_id=5927655&redirect_uri=https://oauth.vk.com/blank.html&scope=messages,friends,video,offline&display=popup&response_type=token');
 
         // подписываем главное окно на событие query
         // и в случае перехвата алертим его данные
         ipcMain.on('query', (event, message) => {
-            
+            console.log( 'ipcMain.on' );
             let token = getURLParam( message.split("#")[1], "access_token" );
             _this.get('VKSpy').userGet( token, function( response ){
                 let user = VKUser.create({
@@ -107,6 +109,7 @@ export default Ember.Component.extend({
                     token: token,
                     photo_50: response.response[0].photo_50,
                 });
+                console.log('USER GET');
                 _this.addUser( user );
             });
         });
