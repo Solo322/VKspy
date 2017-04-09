@@ -1,5 +1,9 @@
 "use strict";
 
+(function(){
+
+console.log("menu-button.js loaded");
+
 var toggles = document.querySelectorAll(".c-hamburger");
 
 for (var i = toggles.length - 1; i >= 0; i--) {
@@ -27,3 +31,5 @@ function toggleHandler(toggle) {
     (this.classList.contains("is-active") === true) ? hideMenuHandler(this): openMenuHandler(this);
   });
 }
+
+})();

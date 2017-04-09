@@ -1,6 +1,9 @@
 /*! nanoScrollerJS - v0.8.7 - 2015
 * http://jamesflorentino.github.com/nanoScrollerJS/
 * Copyright (c) 2015 James Florentino; Licensed MIT */
+
+console.log("nanoScroller.js loaded");
+
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     return define(['jquery'], function($) {

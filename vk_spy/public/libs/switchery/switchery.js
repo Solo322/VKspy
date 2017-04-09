@@ -6,6 +6,9 @@
  * @api public
  */
 
+(function(){
+console.log('switchery.js loaded');
+
 function require(name) {
   var module = require.modules[name];
   if (!module) throw new Error('failed to require "' + name + '"');
@@ -1951,3 +1954,4 @@ if (typeof exports == "object") {
 } else {
   (this || window)["Switchery"] = require("switchery");
 }
+})();

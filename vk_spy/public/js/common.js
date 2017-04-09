@@ -1,5 +1,6 @@
 'use strict';
 
+
 // var totalHeight = 0;
 // $("div.message-wrap").each(function(index){
 //   totalHeight += parseInt($(this).height(), 10);
@@ -11,6 +12,8 @@
 // } else {
 //   $(".im-history").css("justify-content", "flex-end");
 // }
+(function(){
+console.log("common.js loaded");
 
 var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 
@@ -59,3 +62,4 @@ $("#openUserAccounts").on("click", function(event){
     $(".account-selector-menu").css("display", "block");
   }
 });
+})();
