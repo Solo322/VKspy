@@ -34,6 +34,8 @@ export default Ember.Component.extend({
      */
     tagName: '',
 
+    isWasTop: false,
+
     didReceiveAttrs() {
         this._super(...arguments);
 		this.get('controller').on('goToDialog', this, this.goToDialog);
@@ -51,9 +53,12 @@ export default Ember.Component.extend({
         if(totalHeight >= 650){
             $(".im-history").css("justify-content", "none");
             $(".im-history-wrapper .nano").nanoScroller();
-            $(".im-history-wrapper .nano").nanoScroller({ scroll: 'bottom' });
+            if( !this.get('isWasTop') ){
+                $(".im-history-wrapper .nano").nanoScroller({ scroll: 'bottom' });
+            }
             $(".im-history-wrapper .nano").bind("scrolltop", function(e){
                 console.log('scrolltop');
+                _this.set('isWasTop', true);
                 _this.moreMessages();
             });
         }

@@ -145,5 +145,23 @@ export default Ember.Component.extend({
             console.log('user-dialogs::goToDialog');
             this.get('controller').send( 'goToDialog', user );
         },
+
+        searchDialog(){
+            let search_text = this.get('searchText');
+            if( search_text ){
+                let finded_dialogs = [];
+                this.get('dialogs').forEach(function(item, index, enumerable) {
+                    // if( Ember.get(item, 'out') === read_info.out ){
+                    //     Ember.set(item, "readState", 1);   
+                    // }
+                    if( Ember.get( item, 'user.fullName' ).search( search_text ) !== -1 ){
+                        finded_dialogs.pushObject( item );
+                    }
+                });
+                this.set( 'dialogs', finded_dialogs );
+            }
+            else
+                this.getDialogs( 0 );
+        },
     }
 });
