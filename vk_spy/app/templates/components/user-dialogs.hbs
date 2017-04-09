@@ -13,23 +13,36 @@
   }
 </style>
 
-<ul>
-    {{#each sortedDialogs as |dialog|}}
-    <li>
-        <a href="#" {{action "goToDialog" dialog.user}}>
-            <img src={{dialog.user.photo_50}}>
-            <p class="name">{{dialog.user.fullName}}</p>
-            <p class="time">{{dialog.message.time}}</p>
-            <p class="message-{{if dialog.message.readState "read" "unread"}}">
-                {{#if dialog.message.type}}
-                    <font color = "blue">
-                        {{dialog.message.type}}
-                    </font>
-                {{else}}
-                    {{dialog.message.text}}
-                {{/if}}
-            </p>
-        </a>
-    </li>
-    {{/each}}
-</ul>
+<div class="dialog-list">
+    <div class="search">
+        <form>
+            <input type="text" name="search" placeholder="Search">
+        </form>
+    </div>
+    <div class="friends">
+        <div class="nano">
+            <div class="nano-content">
+                <ul>
+                    {{#each sortedDialogs as |dialog|}}
+                    <li>
+                        <a href="#" {{action "goToDialog" dialog.user}}>
+                            <img src={{dialog.user.photo_50}}>
+                            <p class="name">{{dialog.user.fullName}}</p>
+                            <p class="time">{{dialog.message.time}}</p>
+                            <p class="message-{{if dialog.message.readState "read" "unread"}}">
+                                {{#if dialog.message.type}}
+                                    <font color = "blue">
+                                        {{dialog.message.type}}
+                                    </font>
+                                {{else}}
+                                    {{dialog.message.text}}
+                                {{/if}}
+                            </p>
+                        </a>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
