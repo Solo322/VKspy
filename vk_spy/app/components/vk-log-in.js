@@ -99,7 +99,7 @@ export default Ember.Component.extend({
         // подписываем главное окно на событие query
         // и в случае перехвата алертим его данные
         ipcMain.on('query', (event, message) => {
-            console.log( 'ipcMain.on' );
+            vkWindow.close();
             let token = getURLParam( message.split("#")[1], "access_token" );
             _this.get('VKSpy').userGet( token, function( response ){
                 let user = VKUser.create({
@@ -109,20 +109,17 @@ export default Ember.Component.extend({
                     token: token,
                     photo_50: response.response[0].photo_50,
                 });
-                console.log('USER GET');
                 _this.addUser( user );
             });
         });
 
         vkWindow.webContents.on('did-finish-load', function(){
-            if( vkWindow.webContents.getURL().search( "access_token" ) !== -1 )
-            {
+            if( vkWindow.webContents.getURL().search( "access_token" ) !== -1 ){
                 vkWindow.webContents.executeJavaScript(
                     "const {ipcRenderer} = require('electron');" + 
                     "let message = document.location.href;" +
                     "ipcRenderer.send('query', message);"
                     );
-                vkWindow.close();
             }
         });
 
