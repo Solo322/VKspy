@@ -97,6 +97,7 @@ export default Ember.Component.extend({
     	console.log('dialog-messages::goToDialog');
         this.set("messages", []);
         this.set('user', user);
+        this.set('isWasTop', false);
         _this = this;
 		this.get('VKSpy').getHistory( user.id, MESSAGE_COUNT, 0, this.parseGetHistoryAnswer);
     },
