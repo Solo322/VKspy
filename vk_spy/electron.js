@@ -28,7 +28,7 @@ app.on('window-all-closed', function onWindowAllClosed() {
 
 app.on('ready', function onReady() {
     mainWindow = new BrowserWindow({
-        width: 1000,
+        width: 1015,
         height: 850,
         resizable: false
     });
