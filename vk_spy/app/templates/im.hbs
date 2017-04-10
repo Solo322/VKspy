@@ -22,54 +22,31 @@
 </script>
 
 <header>
-   <div class="dialog-menu">
-      <a href="#" class="c-hamburger c-hamburger--htx"  id="menu-button">
-         <span>toggle menu</span>
-         VK Spy
-      </a>
-      <nav>
-         <ul>
-            <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isOnline }}Online</a></li>
-            <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isReading }}Read messages</a></li>
-            <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isTyping }}Typesetting</a></li>
-            <li><a href="#"><img src="image/spy.png">About</a></li>
-            <li><a href="#"><img src="image/logout.png">Logout</a></li>
-         </ul>
-      </nav>
-   </div>
-<!--    <div class="account-menu">
-      <a href="#" id="openUserAccounts">
-         <img class="add-transition" src="image/profile.png">
-      </a>
-      <div class="account-selector-menu">
-         <div class="nano">
-            <div class="nano-content">
-                {{#vk-log-in controller=this}}
-                {{/vk-log-in}}
-            </div>
-         </div>
-         <div class="button-container">
-            <a href="#" id="add-account-button">
-               <img src="image/add-profile-s.png">
-               Add new account
-            </a>
-            <a href="#" id="remove-account">
-               <img src="image/remove-profile-s.png">
-               Remove selected account
-            </a>
-         </div>
-      </div>
-   </div> -->
-                {{#vk-log-in controller=this}}
-                {{/vk-log-in}}
+  <div class="dialog-menu">
+    <a href="#" class="c-hamburger c-hamburger--htx"  id="menu-button">
+       <span>toggle menu</span>
+       VK Spy
+    </a>
+    <nav>
+       <ul>
+          <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isOnline }}Online</a></li>
+          <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isReading }}Read messages</a></li>
+          <li><a href="#" class="option">{{input type="checkbox" class="js-switch" checked=VKSpy.isTyping }}Typesetting</a></li>
+       </ul>
+    </nav>
+  </div>
+
+  {{#vk-log-in controller=this}}
+  {{/vk-log-in}}
+  
 </header>
 <section class="main-window">
 
-    {{#user-dialogs controller=this}}
-    {{/user-dialogs}}
+  {{#user-dialogs controller=this}}
+  {{/user-dialogs}}
 
 
-    {{#dialog-messages controller=this}}
-    {{/dialog-messages}}
+  {{#dialog-messages controller=this}}
+  {{/dialog-messages}}
 
 </section>

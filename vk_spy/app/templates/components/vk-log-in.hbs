@@ -22,11 +22,10 @@
             <ul>
                 {{#each authUsers as |item|}}
                         <li class="current-account {{if-eq VKSpy.user.id item.id }}">
-                    <!-- <li class="current-account selected"> -->
                         <a href="#" {{action "selectUser" item}}>
                             <img src={{item.photo_50}}>
                             <p class="name">{{item.fullName}}</p>
-                            <span class="delete-user" {{action "removeUser" item}}>x</span>
+                            <span class="delete-user add-transition" {{action "removeUser" item}}><span class="minus"></span></span>
                         </a>
                     </li>
                 {{/each}}

@@ -183,17 +183,18 @@ header {
       display: flex;
       flex-direction: column;
       width: 100%;
-      height: 75%;
+      height: 350px;
       background-color: white;
       z-index: 999; }
       .account-menu .account-selector-menu ul li {
         display: inline-block; }
         .account-menu .account-selector-menu ul li a {
-          width: 100%;
+          width: 240px;
           padding: 5px;
           height: 40px;
           color: black;
-          display: inline-block; }
+          text-decoration: none;
+          display: flex; }
           .account-menu .account-selector-menu ul li a img {
             border-radius: 30px;
             width: 40px;
@@ -202,7 +203,7 @@ header {
             float: left; }
           .account-menu .account-selector-menu ul li a p {
             display: inline-block;
-            padding-top: 10px;
+            padding-top: 12px;
             font-family: "Tahoma";
             font-weight: 600;
             float: left; }
@@ -210,7 +211,7 @@ header {
       display: flex;
       flex-direction: column;
       width: 100%;
-      height: 25%; }
+      height: 50px; }
       .account-menu .account-selector-menu .button-container a {
         padding-left: 0px;
         background-color: #58a;
@@ -249,15 +250,6 @@ header {
   height: 10px;
   border-radius: 50%;
   float: left; }
-
-.account-selector-menu .selected a {
-  background-color: #58a; }
-  .account-selector-menu .selected a p {
-    color: white; }
-.account-selector-menu .selected a:hover {
-  background-color: #58a; }
-.account-selector-menu a:hover {
-  background-color: #f2f6fa; }
 
 .add-transition {
   -moz-transition: 0.3s;
@@ -394,5 +386,38 @@ header {
     color: #333;
     width: 80%;
   }
+
+.delete-user {
+  background-color: #ff4040;
+  width: 30px;
+  height: 30px;
+  float: left;
+  margin-top: 6px;
+  margin-left: auto;
+  left: 10px;
+  border-radius: 100%;
+  opacity: 0;
+  display: inline-block; }
+  .delete-user .minus {
+    width: 17px;
+    height: 7px;
+    margin-top: 11px;
+    margin-left: 6px;
+    background-color: white;
+    display: flex;
+    border-radius: 10%; }
+
+.account-selector-menu .selected a {
+  background-color: #58a; }
+  .account-selector-menu .selected a p {
+    color: white; }
+.account-selector-menu .selected a:hover {
+  background-color: #58a; }
+  .account-selector-menu .selected a:hover .delete-user {
+    opacity: 1; }
+.account-selector-menu a:hover {
+  background-color: #f2f6fa; }
+  .account-selector-menu a:hover .delete-user {
+    opacity: 1; }
 
 /*# sourceMappingURL=app.css.map */
